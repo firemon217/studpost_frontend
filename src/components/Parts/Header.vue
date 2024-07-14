@@ -1,27 +1,27 @@
 <template>
     <header>
-        <div class="profile" >
-            <div class="profile__icon" v-if="this.$router.currentRoute._value.path == '/main'">
-                <img src="@/assets/main/usericon.svg"/>
+        <div class="profile">
+            <div class="profile__icon">
+                <img src="@/assets/header/usericon.svg"/>
             </div>
-            <div class="profile__link" v-if="this.$router.currentRoute._value.path == '/main'"><router-link>войти</router-link><router-link>регистрация</router-link></div>
+            <div class="profile__link"><router-link to="/main/authorization">войти</router-link><router-link to="/main/registration">регистрация</router-link></div>
         </div>
         <div class="logo">
-            <img class="logo__ncfu" src="@/assets/main/ncfu.svg"/><img class="logo__studposts" src="@/assets/main/studposts.svg"/>
+            <img class="logo__ncfu" src="@/assets/header/ncfu.svg"/><img class="logo__studposts" src="@/assets/header/studposts.svg"/>
         </div>
         <nav>
-            <div class="nav__link" :class="this.$router.currentRoute._value.path == '/main' ? 'nav__link--active' : ''">
+            <router-link to="/main" class="nav__link">
                 Главная
                 <div></div>
-            </div>
-            <div class="nav__link" :class="this.$router.currentRoute._value.path == '/main/aboutus' ? 'nav__link--active' : ''">
+            </router-link>
+            <router-link to="/main/aboutus" class="nav__link">
                 О проекте
                 <div></div>
-            </div>
+            </router-link>
         </nav>
-        <div class="sortAndSearch" v-if="this.$router.currentRoute._value.path == '/main'">
+        <div class="sortAndSearch">
             <div class="search__input">
-                <img /> <my-input placeholder="Искать по названию" class="input-main"></my-input>
+                <span class="symbol_input"></span> <my-input placeholder="Искать по названию" class="input-main"></my-input>
             </div>
                 Сортировать по: <my-select class="select-main"></my-select>
         </div>
@@ -38,7 +38,7 @@ export default {
 
 <style scoped>
 
-header
+    header
     {
         width: 100%;
         height: 40vh;
@@ -65,7 +65,7 @@ header
         overflow: hidden;
     }
 
-    .profile__icon> img
+    .profile__icon > img
     {
         width: 60px;
         height: 60px;
@@ -84,7 +84,12 @@ header
         flex-direction: column;
     }
 
-    .profile__link> a
+    .header_regist .profile__link
+    {
+        display: none;
+    }
+
+    .profile__link > a
     {
         text-decoration: none;
     }
@@ -130,6 +135,8 @@ header
         position: relative;
         left: 6%;
         margin-left: 2%;
+        text-decoration: none;
+        color: black;
     }
 
     .nav__link--active
@@ -174,11 +181,18 @@ header
         margin-right: 20px;
     }
 
-    .search__input> img
+    .search__input> span
     {
-        width: 14%;
-        height: 85%;
+        width: 12%;
+        height: 80%;
         margin-left: 5%;
+        display: inline-block;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        vertical-align: middle;
+        position: relative;
+        background-image: url('@/assets/header/search.svg');
     }  
 
 </style>

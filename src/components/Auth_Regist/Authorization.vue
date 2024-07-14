@@ -1,43 +1,27 @@
 <template>
     <Header_regist></Header_regist>
-    <div class="register">
+    <div class="authorization">
         <h1>
-            Регистрация
+            Авторизация
         </h1>
         <div class="params">
-            <div class="aboutme">
-                <div class="title">
-                    Обо мне <span class="question question_aboutme"><div class="answer answer_aboutme">Введите свои имя, фамилию и отчество(при наличии) без пробелов</div></span>
-                </div>
-                <div class="input_block"><span class="symbol_input symbol_input__user"></span><my-input placeholder="Имя" class="input-registr"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__user"></span><my-input placeholder="Фамилия" class="input-registr"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__user"></span><my-input placeholder="Отчество (при наличии)" class="input-registr"></my-input></div>
-            </div>
             <div class="enterparams">
                 <div class="title">
                     Параметры ввода <span class="question question_enterparams"><div class="answer answer_enterparams">Введите логин, введите пароль из 8 символов и повторите его</div></span> 
                 </div>
-                <div class="input_block"><span class="symbol_input symbol_input__login"></span><my-input placeholder="Логин"  class="input-registr"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__password"></span> <my-input placeholder="Придумайте пароль" class="input-registr" type="password"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__password"></span><my-input placeholder="Повторите пароль" class="input-registr" type="password"></my-input></div> 
-            </div>
-            <div class="optional">
-                <div class="title">
-                    Связь со мной (не обязательно) <span class="question question_optional"><div class="answer answer_optional">Введите действительную почту и номер телефона (не обязательно)</div></span>
-                </div>
-                <div class="input_block"><span class="symbol_input symbol_input__mail"></span><my-input placeholder="Почта" class="input-registr" type="email"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__phone"></span><my-input placeholder="Номер телефона" class="input-registr"></my-input></div>
+                <div class="input_block"><span class="symbol_input symbol_input__login"></span><my-input placeholder="Логин"  class="input-auth"></my-input></div>
+                <div class="input_block"><span class="symbol_input symbol_input__password"></span> <my-input placeholder="Придумайте пароль" class="input-auth" type="password"></my-input></div>
             </div>
             <div class="captcha">
                 <div class="title">
                     Решите задачу <span class="question question_captcha"><div class="answer answer_captcha">Введите символы, которые видете на изображении</div></span> 
                 </div>
                 <img />
-                <div class="input_block"><span class="symbol_input symbol_input__captcha"></span><my-input placeholder="Текст на картинке"  class="input-registr"></my-input></div>
+                <div class="input_block"><span class="symbol_input symbol_input__captcha"></span><my-input placeholder="Текст на картинке"  class="input-auth"></my-input></div>
             </div>
             <div class="buttonsenter">
-                <my-button class="button_regist">Создать аккаунт</my-button>
-                <router-link to="/main/authorization">У меня уже есть аккаунт</router-link>
+                <my-button class="button_regist">Зайти в аккаунт</my-button>
+                <router-link to="/main/registration">Создать новый</router-link>
             </div>
         </div>
     </div>
@@ -53,13 +37,15 @@ export default {
         Header_regist
     },  
 }
+
 </script>
 
 <style scoped>
-    .register
+
+    .authorization
     {
         width: 53%;
-        height: 186vh;
+        height: 117vh;
         position: relative;
         left: 23.5%;
         margin-top: 7%;
@@ -84,7 +70,7 @@ export default {
     .params
     {
         width: 100%;
-        height: 85%;
+        height: 80%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -92,27 +78,27 @@ export default {
         border-top: 1px solid #E7E7E7;
     }
 
-    .aboutme, .enterparams, .optional, .captcha
+    .enterparams
     {
         width: 48%;
-        height: 17%;
+        height: 28%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         margin-top: 5%;
     }
 
-    .optional
-    {
-        height: 12%;
-    }
-
     .captcha
     {
-        height: 24%;
+        width: 48%;
+        height: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 5%;
     }
-    
-    .aboutme > .title, .enterparams > .title, .optional > .title, .captcha > .title
+
+    .enterparams > .title, .captcha > .title
     {
         color: #515151;
         font-size: 1.5em;
@@ -150,7 +136,7 @@ export default {
         transition-duration: 0.5s;
     }
 
-    .question_aboutme:hover > .answer_aboutme, .question_enterparams:hover > .answer_enterparams, .question_optional:hover > .answer_optional, .question_captcha:hover > .answer_captcha
+    .question_enterparams:hover > .answer_enterparams, .question_captcha:hover > .answer_captcha
     {
         display: inline-block;
     }
@@ -170,11 +156,6 @@ export default {
     .captcha > .input_block
     {
         height: 15%;
-    }
-
-    .optional > .input_block
-    {
-        height: 30%;
     }
 
     .captcha > img
@@ -197,11 +178,6 @@ export default {
         position: relative;
     }
 
-    .symbol_input__phone
-    {
-        background-image: url('@/assets/regist_auth/phone.svg');
-    }
-
     .symbol_input__captcha
     {
         background-image: url('@/assets/regist_auth/capcha.svg');
@@ -217,20 +193,10 @@ export default {
         background-image: url('@/assets/regist_auth/login.svg');
     }
 
-    .symbol_input__user
-    {
-        background-image: url('@/assets/regist_auth/usericon.svg');
-    }
-
-    .symbol_input__mail
-    {
-        background-image: url('@/assets/regist_auth/mail.svg');
-    }
-
     .buttonsenter
     {
         width: 100%;
-        height: 9%;
+        height: 15%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -245,6 +211,8 @@ export default {
         color: #0000A9;
         margin-top: 3%;
     }
+
+
 
 </style>
     

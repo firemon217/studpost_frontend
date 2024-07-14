@@ -1,8 +1,5 @@
 <template>
-    <Header></Header>
-    <main>
-        <router-view></router-view>
-    </main>
+    <router-view></router-view>
     <footer>
         <div class="about">
             <div>
@@ -23,25 +20,22 @@
 
 <script>
 
-import Header from './Parts/Header.vue';
-
 export default {
     name: 'main-studpost',
 
-    components: {
-        Header
-    },  
+    data()
+    {
+        return {
+            
+        }
+    },
 
     methods:
     {
-        GetPash()
-        {
-            console.log(this.$router.currentRoute._value.path)
-        }
     },
     mounted()
     {
-        this.GetPash()
+       
     },
 }
 

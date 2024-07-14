@@ -89,6 +89,32 @@ export default {
         color: rgb(167, 167, 167);
     }
 
+    .button_auth
+    {
+        width: 47%;
+        height: 60%;
+        background-color: #AC2DFE;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        font-size: 1.9em;
+        transition-duration: 0.2s;
+    }
+
+    .button_auth:hover
+    {
+        background-color: #9323dd;
+        color: rgb(212, 212, 212);
+    }
+
+    
+    .button_auth:active
+    {
+        transition-duration: 0.1s;
+        background-color: #65169b;
+        color: rgb(167, 167, 167);
+    }
+
     @media (max-width: 1366px)
     {
 

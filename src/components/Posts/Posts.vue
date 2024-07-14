@@ -1,4 +1,5 @@
 <template>
+    <Header></Header>
     <div class="posts">
         <my-button class="addPost">
             <h1>
@@ -72,8 +73,13 @@
 
 <script>
 
+import Header from '../Parts/Header.vue';
+
 export default {
     name: 'posts-block',
+    components: {
+        Header
+    },  
 }
 </script>
 
@@ -165,6 +171,7 @@ export default {
         align-items: right;
         font-weight: 700;
         margin-top: 40px;
+        font-family: "Montserrat", sans-serif;
    }
 
    .post> .content__text

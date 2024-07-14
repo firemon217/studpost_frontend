@@ -18,7 +18,7 @@ export default {
     box-sizing: border-box;
     outline: 0;
     outline-offset: 0;
-    font-family: Arial;
+    font-family: "Inter", sans-serif;
   }
 
   #app {
