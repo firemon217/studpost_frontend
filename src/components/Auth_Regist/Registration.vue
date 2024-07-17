@@ -9,31 +9,31 @@
                 <div class="title">
                     Обо мне <span class="question question_aboutme"><div class="answer answer_aboutme">Введите свои имя, фамилию и отчество(при наличии) без пробелов</div></span>
                 </div>
-                <div class="input_block"><span class="symbol_input symbol_input__user"></span><my-input placeholder="Имя" class="input-registr"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__user"></span><my-input placeholder="Фамилия" class="input-registr"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__user"></span><my-input placeholder="Отчество (при наличии)" class="input-registr"></my-input></div>
+                <div class="input_block"><span class="symbol_input symbol_input__user"></span><my-input placeholder="Имя" class="input-registr" v-model="first_name" :class="{input_registr_error: spaceCheck(first_name)}"></my-input></div>
+                <div class="input_block"><span class="symbol_input symbol_input__user"></span><my-input placeholder="Фамилия" class="input-registr" v-model="sur_name" :class="{input_registr_error: spaceCheck(sur_name)}"></my-input></div>
+                <div class="input_block"><span class="symbol_input symbol_input__user"></span><my-input placeholder="Отчество (при наличии)" class="input-registr" v-model="middle_name" :class="{input_registr_error: spaceCheck(middle_name)}"></my-input></div>
             </div>
             <div class="enterparams">
                 <div class="title">
                     Параметры ввода <span class="question question_enterparams"><div class="answer answer_enterparams">Введите логин, введите пароль из 8 символов и повторите его</div></span> 
                 </div>
-                <div class="input_block"><span class="symbol_input symbol_input__login"></span><my-input placeholder="Логин"  class="input-registr"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__password"></span> <my-input placeholder="Придумайте пароль" class="input-registr" type="password"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__password"></span><my-input placeholder="Повторите пароль" class="input-registr" type="password"></my-input></div> 
+                <div class="input_block"><span class="symbol_input symbol_input__login"></span><my-input placeholder="Логин" class="input-registr" v-model="login" :class="{input_registr_error: spaceCheck(login)}"></my-input></div>
+                <div class="input_block"><span class="symbol_input symbol_input__password"></span> <my-input placeholder="Придумайте пароль" class="input-registr" type="password" v-model="password" :class="{input_registr_error: spaceCheck(password)}"></my-input></div>
+                <div class="input_block"><span class="symbol_input symbol_input__password"></span><my-input placeholder="Повторите пароль" class="input-registr" type="password" v-model="password_repeat" :class="{input_registr_error: spaceCheck(password_repeat)}"></my-input></div> 
             </div>
             <div class="optional">
                 <div class="title">
                     Связь со мной (не обязательно) <span class="question question_optional"><div class="answer answer_optional">Введите действительную почту и номер телефона (не обязательно)</div></span>
                 </div>
-                <div class="input_block"><span class="symbol_input symbol_input__mail"></span><my-input placeholder="Почта" class="input-registr" type="email"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__phone"></span><my-input placeholder="Номер телефона" class="input-registr"></my-input></div>
+                <div class="input_block"><span class="symbol_input symbol_input__mail"></span><my-input placeholder="Почта" class="input-registr" v-model="email" :class="{input_registr_error: spaceCheck(email)}"></my-input></div>
+                <div class="input_block"><span class="symbol_input symbol_input__phone"></span><my-input placeholder="Номер телефона" class="input-registr" v-model="phone" :class="{input_registr_error: spaceCheck(phone)}"></my-input></div>
             </div>
             <div class="captcha">
                 <div class="title">
                     Решите задачу <span class="question question_captcha"><div class="answer answer_captcha">Введите символы, которые видете на изображении</div></span> 
                 </div>
-                <img />
-                <div class="input_block"><span class="symbol_input symbol_input__captcha"></span><my-input placeholder="Текст на картинке"  class="input-registr"></my-input></div>
+                <img ref="captcha__img"/>
+                <div class="input_block"><span class="symbol_input symbol_input__captcha"></span><my-input placeholder="Текст на картинке" class="input-registr" v-model="captcha" :class="{input_registr_error: spaceCheck(captcha)}"></my-input></div>
             </div>
             <div class="agree">
                 <div>
@@ -43,7 +43,7 @@
                 <my-checkbox class="registr_checkbox" @click="checkbox = !checkbox" :checkbox="checkbox"></my-checkbox>
             </div>
             <div class="buttonsenter">
-                <my-button class="button_regist">Создать аккаунт</my-button>
+                <my-button class="button_regist" @click = 'registration'>Создать аккаунт</my-button>
                 <router-link to="/main/authorization">У меня уже есть аккаунт</router-link>
             </div>
         </div>
@@ -62,12 +62,106 @@ export default {
     data()
     {
         return {
-            checkbox: false
+            checkbox: false,
+            first_name: '',
+            sur_name: '',
+            middle_name: '',
+            login: '',
+            password: '',
+            password_repeat: '',
+            email: '',
+            phone: '',
+            captcha: '',
+            captcha_token: '',
+            notSpace: false
         }
     },
     methods:
     {
-        
+        getCaptcha()
+        {
+            const response = fetch("http://127.0.0.1:5000/api/captcha")
+            const data = response.json()
+            console.log(data)
+            this.$refs.captcha__img.src = "data:image/png;base64," + data.captcha_image
+            this.captcha_token = data.captcha_token
+        },
+
+        registration()
+        {
+            if(this.first_name == '' && this.sur_name == '' && this.middle_name == '' && this.login == '' && this.password == '' && this.password_repeat == '' && this.captcha == '')
+            {
+                alert('Введены не все данные')
+                return
+            }
+            if(document.getElementsByClassName('input_registr_error').length != 0)
+            {
+                alert('Введены некорректные данные')
+                return
+            }
+            if(this.password.length <= 8)
+            {
+                alert('Слишком короткий пароль')
+                return
+            }
+            if(this.password != this.password_repeat)
+            {
+                alert('Пароли не совпадают')
+                return
+            }
+            if(!this.checkbox)
+            {
+                alert('Не согласен(-на) с правилами поведения на платформе')
+                return
+            }
+            const response = fetch("http://127.0.0.1:5000/api/auth", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Target-Action': 'REGISTER'
+                },
+                body: JSON.stringify({
+                    first_name: this.first_name,
+                    sur_name: this.sur_name,
+                    middle_name: this.middle_name,
+                    login: this.login,
+                    password: this.password,
+                    email: this.email,
+                    phone: this.phone,
+                    captcha_token: this.captcha_token,
+                    input_captcha: this.captcha
+                })
+            })
+            const data = response.json()
+            console.log(data)
+            if(!response)
+            {
+                alert("huia")
+                return
+            }
+            this.$router.push("/main")
+        },
+
+        spaceCheck(elem)
+        {
+            let isSpace = false
+            Array.from(elem).forEach(element => {
+                if (element == ' ')
+                {
+                    isSpace = true
+                }
+            });
+            if(isSpace)
+            {
+                return true
+            }
+            return false 
+        }
+    },
+
+    mounted()
+    {
+        // this.getCaptcha()
     }
 }
 </script>

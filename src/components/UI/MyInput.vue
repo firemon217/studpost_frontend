@@ -7,7 +7,7 @@
 export default {
     name: 'my-input',
     props:{
-        modelValue: String, Number
+        modelValue: [String, Number]
     },
     methods:
     {
@@ -52,6 +52,10 @@ export default {
     .input-registr::placeholder
     {
         color: #CECECE
+    }
+
+    .input_registr_error{
+        color: red;
     }
 
     .input-auth
