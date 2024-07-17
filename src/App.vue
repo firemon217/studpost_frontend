@@ -24,7 +24,9 @@ export default {
   #app {
     width: 100%;
     min-height: 200vh;
-    background-color: #DEDEDE;
+    background-image: url("@/assets/main/background.svg");
+    background-size: 100%;
+    background-repeat: repeat-y;
     position: relative;
   }
 

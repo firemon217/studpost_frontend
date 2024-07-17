@@ -64,6 +64,17 @@ export default {
         padding-left: 1em;
         padding-right: 1em;
     } 
+
+    .input-createpost
+    {       
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0);
+        border: none;
+        font-size: 1.6em;
+        padding-left: 1em;
+        padding-right: 1em;
+    } 
     
     .input-auth::placeholder
     {

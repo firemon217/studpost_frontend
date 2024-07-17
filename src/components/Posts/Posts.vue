@@ -1,17 +1,15 @@
 <template>
-    <Header></Header>
+    <Header :isProfile="true" :isSearchSort="true" :isPost="true"></Header>
     <div class="posts">
-        <my-button class="addPost">
+        <div class="addPost">
             <h1>
                 Делитесь своими деями, мыслями и историями, о чем вы сейчас думаете ?
             </h1>
-            <div class="addButton">
-                <img src="@/assets/main/addpost.svg" />
-            </div>
+            <my-button class="addButton" @click="$router.push('/main/createpost')"><Vue3Lottie :animationData="animButton"/></my-button>
             <h2>
                 Добавить публикацию
             </h2>
-        </my-button>
+        </div>
         <div class="post">
             <div class="info">
                 <div>
@@ -34,7 +32,7 @@
             </my-button>
             <div class="rates">
                 <span class="rates__info">
-                    <span class="info__icon_char_view"></span> 1000 / <span class="info__icon_char_like"></span> 200 / <span class="info__icon_char_dislike"></span> 10
+                    <span class="info__icon_char info__icon_char_view"></span> 1000 / <span class="info__icon_char info__icon_char_like"></span> 200 / <span class="info__icon_char info__icon_char_dislike"></span> 10
                  </span>
             </div>
         </div>
@@ -60,7 +58,7 @@
             </my-button>
             <div class="rates">
                  <span class="rates__info">
-                    <span class="info__icon_char_view"></span> 1000 / <span class="info__icon_char_like"></span> 200 / <span class="info__icon_char_dislike"></span> 10
+                    <span class="info__icon_char info__icon_char_view"></span> 1000 / <span class="info__icon_char info__icon_char_like"></span> 200 / <span class="info__icon_char info__icon_char_dislike"></span> 10
                  </span>
             </div>
         </div>
@@ -74,12 +72,40 @@
 <script>
 
 import Header from '../Parts/Header.vue';
+import { Vue3Lottie } from 'vue3-lottie'
+import animButton from '@/assets/main/data.json'
 
 export default {
     name: 'posts-block',
     components: {
-        Header
+        Header,
+        Vue3Lottie
     },  
+    data()
+    {
+        return {
+            animButton
+        }
+    },
+    methods: {
+        animationButton()
+        {
+            // let container = document.getElementById('animButton');
+            // let params = {
+            //     container: container,
+            //     renderer: 'svg',
+            //     loop: true,
+            //     autoplay: false,
+            //     path: data
+            // };
+
+        }
+    },
+
+    mounted()
+    {
+        this.animationButton()
+    }
 }
 </script>
 
@@ -94,22 +120,28 @@ export default {
         align-items: center;
    }
 
+   .addPost
+    {
+        width: 1000px;
+        height: 340px;
+        background-color: white;
+        border-radius: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.2);
+        border: none;
+        cursor: pointer;
+    }
+
    .addPost> h1
    {
         width: 900px;
         font-weight: 400;
-        font-size: 1.8em;
+        font-size: 1.7em;
         margin-top: 3%;
+        text-align: left;
    } 
-   
-   .addPost> .addButton
-   {
-        width: 150px;
-        height: 150px;
-        border-radius: 100%;
-        border: 5px dotted #c8b5d8;
-        margin-top: 30px;
-   }
 
    .addPost> h2
    {
@@ -237,54 +269,38 @@ export default {
         justify-content: right;
         align-items: center;
         color: #CECECE;
-        font-size: 1.7em;
+        font-size: 1.25em;
         font-weight: 900;
-        margin-top: 60px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+   }
+
+   .info__icon_char
+   {
+        display: inline-block; /* Сделать span блочным элементом */
+        width: 40px; /* Ширина иконки */
+        height: 40px; /* Высота иконки */
+        background-size: cover; /* Растянуть изображение по размерам блока */
+        background-repeat: no-repeat; /* Не повторять изображение */
+        /* Дополнительные стили для красоты */
+        background-position: center; /* Выравнивание по вертикали */
+        vertical-align: middle;
+        position: relative;
    }
 
    .info__icon_char_view
    {
-        display: inline-block; /* Сделать span блочным элементом */
-        width: 50px; /* Ширина иконки */
-        height: 50px; /* Высота иконки */
         background-image: url('@/assets/main/view.svg'); /* Путь к изображению */
-        background-size: cover; /* Растянуть изображение по размерам блока */
-        background-repeat: no-repeat; /* Не повторять изображение */
-        /* Дополнительные стили для красоты */
-        background-position: center; /* Выравнивание по вертикали */
-        vertical-align: middle;
-        position: relative;
-        top: -3px;
    }
 
    .info__icon_char_like
    {
-        display: inline-block; /* Сделать span блочным элементом */
-        width: 50px; /* Ширина иконки */
-        height: 50px; /* Высота иконки */
         background-image: url('@/assets/main/like.svg'); /* Путь к изображению */
-        background-size: cover; /* Растянуть изображение по размерам блока */
-        background-repeat: no-repeat; /* Не повторять изображение */
-        /* Дополнительные стили для красоты */
-        background-position: center; /* Выравнивание по вертикали */
-        vertical-align: middle;
-        position: relative;
-        top: -7px;
    }
 
    .info__icon_char_dislike
    {
-        display: inline-block; /* Сделать span блочным элементом */
-        width: 50px; /* Ширина иконки */
-        height: 50px; /* Высота иконки */
         background-image: url('@/assets/main/dislike.svg'); /* Путь к изображению */
-        background-size: cover; /* Растянуть изображение по размерам блока */
-        background-repeat: no-repeat; /* Не повторять изображение */
-        /* Дополнительные стили для красоты */
-        background-position: center; /* Выравнивание по вертикали */
-        vertical-align: middle;
-        position: relative;
-        top: -3px;
    }
 
    @media (max-width: 1366px)
@@ -304,6 +320,7 @@ export default {
     {
         width: 600px;
     }
+
   }
 
 

@@ -47,6 +47,7 @@ export default {
     {
         width: 100%;
         min-height: 118vh;
+        position: relative;
     }
 
     footer
@@ -54,10 +55,10 @@ export default {
         margin-top: 100px;
         width: 100%;
         height: 42vh;
-        background-color: #EAEAEA;
+        background-color: #F7F7F7;
         position: relative;
         bottom: 0;
-        border-top: 2px solid #C9C9C9;
+        border-top: 2px solid #C7C3C3;
         display: flex;
         flex-direction: column;
         align-items: center;

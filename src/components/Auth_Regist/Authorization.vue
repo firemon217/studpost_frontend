@@ -1,5 +1,5 @@
 <template>
-    <Header_regist></Header_regist>
+    <Header></Header>
     <div class="authorization">
         <h1>
             Авторизация
@@ -29,12 +29,12 @@
 
 <script>
 
-import Header_regist from '../Parts/Header-regist.vue'
+import Header from '../Parts/Header.vue'
 
 export default {
     name: 'reg-block',
     components: {
-        Header_regist
+        Header
     },  
 }
 
@@ -48,7 +48,7 @@ export default {
         height: 117vh;
         position: relative;
         left: 23.5%;
-        margin-top: 7%;
+        margin-top: 50px;
         background-color: white;
         border-radius: 50px;
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -119,7 +119,7 @@ export default {
         background-position: center;
         vertical-align: middle;
         position: relative;
-        background-image: url('@/assets/regist_auth/capcha.svg');
+        background-image: url('@/assets/regist_auth/info.svg');
         font-size: 0.8em;
     }
 

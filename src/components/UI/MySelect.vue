@@ -1,13 +1,14 @@
 <template>
     <div>
         <div class="select"> 
-            <img src="@/assets/main/dropout.svg"/> <div>Сначало свежие</div>
+            <img src="@/assets/header/dropout.svg"/><div ref="select">Сначало свежие</div>
         </div>
         <div class="select-list">
-            <div class="select-elem">Сначала старее</div>
-            <div class="select-elem">По алфавиту вверх</div>
-            <div class="select-elem">По алфавиту вниз</div>
-            <div class="select-elem">По имени вверх</div>
+            <div class="select-elem" @click="select">Сначала свежие</div>
+            <div class="select-elem" @click="select">Сначала старые</div>
+            <div class="select-elem" @click="select">По алфавиту вверх</div>
+            <div class="select-elem" @click="select">По алфавиту вниз</div>
+            <div class="select-elem" @click="select">По имени вверх</div>
         </div>
     </div>
 </template>
@@ -16,6 +17,13 @@
 
 export default {
     name: 'my-select',
+    methods:
+    {
+        select(elem)
+        {
+            this.$refs.select.innerText = elem.target.innerText
+        }
+    }
 }
 </script>
 
@@ -31,12 +39,13 @@ export default {
         text-wrap: nowrap;
         position: relative;
         border-radius: 25px;
+        border: none;
         transition-duration: 0.3s;
     }
 
     .select-main> .select
     {
-        width: 80%;
+        width: 100%;
         height: 100%;
         background-color: rgba(0,0,0,0);
         border: none;
@@ -47,10 +56,14 @@ export default {
 
     .select-main> .select> img
     {
-        width: 20%;
+        width: 15%;
         height: 90%;
-        margin-right: 10px;
         transition-duration: 0.3s;
+    }
+
+    .select-main> .select> div
+    {
+        width: 80%;
     }
 
     .select-main> .select-list
@@ -82,7 +95,7 @@ export default {
     .select-main:hover > .select-list
     {
         width: 100%;
-        height: 200px;
+        height: 250px;
     }
 
     .select-main:hover > .select > img

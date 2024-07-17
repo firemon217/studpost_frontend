@@ -1,16 +1,16 @@
 <template>
-    <header>
+    <header :class="{shadow: !isSearchSort}">
         <div class="profile">
-            <div class="profile__icon">
+            <div class="profile__icon" v-if="isProfile">
                 <img src="@/assets/header/usericon.svg"/>
             </div>
-            <div class="profile__link"><router-link to="/main/authorization">войти</router-link><router-link to="/main/registration">регистрация</router-link></div>
+            <div class="profile__link" v-if="isProfile"><router-link to="/main/authorization">войти</router-link><router-link to="/main/registration">регистрация</router-link></div>
         </div>
         <div class="logo">
             <img class="logo__ncfu" src="@/assets/header/ncfu.svg"/><img class="logo__studposts" src="@/assets/header/studposts.svg"/>
         </div>
         <nav>
-            <router-link to="/main" class="nav__link">
+            <router-link to="/main" class="nav__link" :class="{nav__link_active: isPost}">
                 Главная
                 <div></div>
             </router-link>
@@ -19,19 +19,39 @@
                 <div></div>
             </router-link>
         </nav>
-        <div class="sortAndSearch">
-            <div class="search__input">
-                <span class="symbol_input"></span> <my-input placeholder="Искать по названию" class="input-main"></my-input>
-            </div>
-                Сортировать по: <my-select class="select-main"></my-select>
-        </div>
     </header>
+    <div class="sortAndSearch" :class="{sortAndSearchHide: isSearchHide}" v-if="isSearchSort">
+        <div class="search__input">
+            <span class="symbol_input"></span> <my-input placeholder="Искать по названию" class="input-main"></my-input>
+        </div>
+        Сортировать по: <my-select class="select-main"></my-select>
+    </div>
+    <my-button class="hideSearch" :class="{hideSearchHidden: isSearchHide}" @click="hideSearch" v-if="isSearchSort" :hideSearch="isSearchHide"></my-button>
 </template>
 
 <script>
 
 export default {
     name: 'header-block',
+    props:
+    {
+        isProfile: Boolean,
+        isSearchSort: Boolean,
+        isPost: Boolean
+    },
+    data()
+    {
+        return {
+            isSearchHide: false
+        }
+    },
+    methods:
+    {
+        hideSearch()
+        {
+            this.isSearchHide = !this.isSearchHide
+        }
+    }
 }
 
 </script>
@@ -41,16 +61,21 @@ export default {
     header
     {
         width: 100%;
-        height: 40vh;
+        height: 34vh;
         position: relative;
         background-color: white;
-        box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .shadow
+    {
+        box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.08);
     }
 
     .profile
     {
         width: 100%;
-        height: 22%;
+        height: 26%;
         display: flex;
         justify-content: right;
         align-items: center;
@@ -97,7 +122,7 @@ export default {
     .logo
     {
         width: 100%;
-        height: 48%;
+        height: 58%;
         display: flex;
         align-items: center;
     }
@@ -119,7 +144,7 @@ export default {
     nav
     {
         width: 100%;
-        height: 14%;
+        height: 16%;
         display: flex;
         align-items: center;
     }
@@ -139,7 +164,7 @@ export default {
         color: black;
     }
 
-    .nav__link--active
+    .nav__link_active
     {
         color: #8C3CFF;
     }
@@ -154,7 +179,7 @@ export default {
         border-radius: 2.5px;
     }
 
-    .nav__link--active> div
+    .nav__link_active> div
     {
         background-color: #8C3CFF;
     }
@@ -162,12 +187,23 @@ export default {
     .sortAndSearch
     {
         width: 100%;
-        height: 16%;
+        height: 6vh;
+        top: 0;
         display: flex;
         justify-content: right;
         align-items: center;
+        background-color: white;
         border-top: 2px solid #C9C9C9;
         font-size: 1.4em;
+        box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.08);
+        position: relative;
+        transition: top 0.3s;
+        z-index: 0;
+    }
+
+    .sortAndSearchHide
+    {
+        top: -6vh;
     }
 
     .search__input
@@ -194,6 +230,10 @@ export default {
         position: relative;
         background-image: url('@/assets/header/search.svg');
     }  
+
+
+
+
 
 </style>
     

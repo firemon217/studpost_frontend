@@ -11,21 +11,36 @@ export default {
 
 <style scoped>
 
-    .addPost
+    .addButton
    {
-        width: 1000px;
-        height: 340px;
-        background-color: white;
-        margin-top: 70px;
-        border-radius: 50px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.2);
-        border: none;
+        width: 150px;
+        height: 150px;
+        border-radius: 100%;
+        border: 4px dotted #ad79f0;
+        margin-top: 30px;
         cursor: pointer;
    }
 
+    .hideSearch
+    {
+        position: relative;
+        top: 0;
+        left: 47.5%;
+        width: 5%;
+        height: 50px;
+        background-image: url('@/assets/header/dropout.svg');
+        background-size: 100% 100%;
+        background-color: rgba(0, 0, 0, 0);
+        border: none;
+        transform: rotate(180deg);
+        transition: 0.3s;
+    }
+
+    .hideSearchHidden
+    {
+        transform: rotate(0);
+        top: -6vh;
+    }
    
    .content__image
    {
@@ -115,14 +130,33 @@ export default {
         color: rgb(167, 167, 167);
     }
 
-    @media (max-width: 1366px)
+    .button_create
     {
+        width: 48%;
+        height: 6%;
+        background-color: #AC2DFE;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        font-size: 1.7em;
+        transition-duration: 0.2s;
+        position: relative;
+        left: 26.5%;
+        margin-top: 10%;
+    }
 
-        .addPost
-        {
-            width: 600px;
-        }
+    .button_create:hover
+    {
+        background-color: #9323dd;
+        color: rgb(212, 212, 212);
+    }
 
+    
+    .button_create:active
+    {
+        transition-duration: 0.1s;
+        background-color: #65169b;
+        color: rgb(167, 167, 167);
     }
 
 </style>

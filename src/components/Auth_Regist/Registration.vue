@@ -1,5 +1,5 @@
 <template>
-    <Header_regist></Header_regist>
+    <Header></Header>
     <div class="register">
         <h1>
             Регистрация
@@ -35,6 +35,13 @@
                 <img />
                 <div class="input_block"><span class="symbol_input symbol_input__captcha"></span><my-input placeholder="Текст на картинке"  class="input-registr"></my-input></div>
             </div>
+            <div class="agree">
+                <div>
+                    Я ознакомился(-лась) с <router-link>политикой конфеденциальности, </router-link><br>
+                    также согласен(-на) с <router-link>правилами поведения на платформе</router-link>
+                </div>
+                <my-checkbox class="registr_checkbox" @click="checkbox = !checkbox" :checkbox="checkbox"></my-checkbox>
+            </div>
             <div class="buttonsenter">
                 <my-button class="button_regist">Создать аккаунт</my-button>
                 <router-link to="/main/authorization">У меня уже есть аккаунт</router-link>
@@ -45,13 +52,23 @@
 
 <script>
 
-import Header_regist from '../Parts/Header-regist.vue'
+import Header from '../Parts/Header.vue'
 
 export default {
     name: 'reg-block',
     components: {
-        Header_regist
-    },  
+        Header
+    }, 
+    data()
+    {
+        return {
+            checkbox: false
+        }
+    },
+    methods:
+    {
+        
+    }
 }
 </script>
 
@@ -62,7 +79,7 @@ export default {
         height: 186vh;
         position: relative;
         left: 23.5%;
-        margin-top: 7%;
+        margin-top: 50px;
         background-color: white;
         border-radius: 50px;
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -133,7 +150,7 @@ export default {
         background-position: center;
         vertical-align: middle;
         position: relative;
-        background-image: url('@/assets/regist_auth/capcha.svg');
+        background-image: url('@/assets/regist_auth/info.svg');
         font-size: 0.8em;
     }
 
@@ -227,14 +244,34 @@ export default {
         background-image: url('@/assets/regist_auth/mail.svg');
     }
 
-    .buttonsenter
+    .agree
     {
-        width: 100%;
-        height: 9%;
+        width: 70%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 9%;
+        margin-top: 4%;
+    }
+
+    .agree > div:nth-child(1)
+    {
+        font-size: 1.2em;
+    }
+
+    .agree > div:nth-child(1)> a
+    {
+        text-decoration: none;
+        color: #0000A9;
+    }
+
+    .buttonsenter
+    {
+        width: 100%;
+        height: 10%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 6%;
         position: relative;
     }
 
