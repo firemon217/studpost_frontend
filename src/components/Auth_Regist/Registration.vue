@@ -87,7 +87,7 @@ export default {
             this.captcha_token = data.captcha_token
         },
 
-        registration()
+        async registration()
         {
             if(this.first_name == '' && this.sur_name == '' && this.middle_name == '' && this.login == '' && this.password == '' && this.password_repeat == '' && this.captcha == '')
             {
@@ -114,26 +114,28 @@ export default {
                 alert('Не согласен(-на) с правилами поведения на платформе')
                 return
             }
-            const response = fetch("http://127.0.0.1:5000/api/auth", {
+            const data = 
+            {
+                first_name: this.first_name,
+                sur_name: this.sur_name,
+                middle_name: this.middle_name,
+                login: this.login,
+                password: this.password,
+                email: this.email,
+                phone: this.phone,
+                captcha_token: this.captcha_token,
+                input_captcha: this.captcha
+            }
+            const response = await fetch("http://127.0.0.1:5000/api/auth", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Target-Action': 'REGISTER'
                 },
-                body: JSON.stringify({
-                    first_name: this.first_name,
-                    sur_name: this.sur_name,
-                    middle_name: this.middle_name,
-                    login: this.login,
-                    password: this.password,
-                    email: this.email,
-                    phone: this.phone,
-                    captcha_token: this.captcha_token,
-                    input_captcha: this.captcha
-                })
+                body: JSON.stringify({data})
             })
-            const data = response.json()
-            console.log(data)
+            const resData = response.json()
+            console.log(resData)
             if(!response)
             {
                 alert("huia")
