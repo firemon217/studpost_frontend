@@ -4,60 +4,84 @@
         <h1>
             Регистрация
         </h1>
-        <div class="params">
-            <div class="aboutme">
-                <div class="title">
-                    Обо мне <span class="question question_aboutme"><div class="answer answer_aboutme">Введите свои имя, фамилию и отчество(при наличии) без пробелов</div></span>
+        <div class="container_params">
+            <div class="photoAndCaptcha">
+                <div class="photo">
+                    <div class="title">
+                        Изображение профиля <span class="question question_captcha"><div class="answer answer_captcha">Введите символы, которые видете на изображении</div></span> 
+                    </div>
+                    <div class="input-registr-picture-container">
+                        <input class="input-registr-picture" type="file" @change="loadPicture($event)" v-if="!isPictureOnload"/>
+                        <Vue3Lottie :animationData="animProfilePhoto" v-if="!isPictureOnload"/>
+                        <img ref="pictureProfile" v-show="isPictureOnload"/>
+                    </div>
                 </div>
-                <div class="input_block"><span class="symbol_input symbol_input__user"></span><my-input placeholder="Имя" class="input-registr" v-model="first_name" :class="{input_registr_error: spaceCheck(first_name)}"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__user"></span><my-input placeholder="Фамилия" class="input-registr" v-model="sur_name" :class="{input_registr_error: spaceCheck(sur_name)}"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__user"></span><my-input placeholder="Отчество (при наличии)" class="input-registr" v-model="middle_name" :class="{input_registr_error: spaceCheck(middle_name)}"></my-input></div>
-            </div>
-            <div class="enterparams">
-                <div class="title">
-                    Параметры ввода <span class="question question_enterparams"><div class="answer answer_enterparams">Введите логин, введите пароль из 8 символов и повторите его</div></span> 
+                <div class="captcha">
+                    <div class="title">
+                        Решите задачу <span class="question question_captcha"><div class="answer answer_captcha">Введите символы, которые видете на изображении</div></span> 
+                    </div>
+                    <img ref="captcha__img"/>
+                    <div class="input_block"><span class="symbol_input symbol_input__captcha"></span><my-input placeholder="Текст на картинке" class="input-registr" v-model="captcha" :class="{input_registr_error: spaceCheck(captcha)}"></my-input></div>
                 </div>
-                <div class="input_block"><span class="symbol_input symbol_input__login"></span><my-input placeholder="Логин" class="input-registr" v-model="login" :class="{input_registr_error: spaceCheck(login)}"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__password"></span> <my-input placeholder="Придумайте пароль" class="input-registr" type="password" v-model="password" :class="{input_registr_error: spaceCheck(password)}"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__password"></span><my-input placeholder="Повторите пароль" class="input-registr" type="password" v-model="password_repeat" :class="{input_registr_error: spaceCheck(password_repeat)}"></my-input></div> 
             </div>
-            <div class="optional">
-                <div class="title">
-                    Связь со мной (не обязательно) <span class="question question_optional"><div class="answer answer_optional">Введите действительную почту и номер телефона (не обязательно)</div></span>
+            <div class="params">
+                <div class="aboutme">
+                    <div class="title">
+                        Обо мне <span class="question question_aboutme"><div class="answer answer_aboutme">Введите свои имя, фамилию и отчество(при наличии) без пробелов</div></span>
+                    </div>
+                    <div class="input_block"><span class="symbol_input symbol_input__user"></span><my-input placeholder="Имя" class="input-registr" v-model="first_name" :class="{input_registr_error: spaceCheck(first_name)}"></my-input></div>
+                    <div class="input_block"><span class="symbol_input symbol_input__user"></span><my-input placeholder="Фамилия" class="input-registr" v-model="sur_name" :class="{input_registr_error: spaceCheck(sur_name)}"></my-input></div>
+                    <div class="input_block"><span class="symbol_input symbol_input__user"></span><my-input placeholder="Отчество (при наличии)" class="input-registr" v-model="middle_name" :class="{input_registr_error: spaceCheck(middle_name)}"></my-input></div>
                 </div>
-                <div class="input_block"><span class="symbol_input symbol_input__mail"></span><my-input placeholder="Почта" class="input-registr" v-model="email" :class="{input_registr_error: spaceCheck(email)}"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__phone"></span><my-input placeholder="Номер телефона" class="input-registr" v-model="phone" :class="{input_registr_error: spaceCheck(phone)}"></my-input></div>
-            </div>
-            <div class="captcha">
-                <div class="title">
-                    Решите задачу <span class="question question_captcha"><div class="answer answer_captcha">Введите символы, которые видете на изображении</div></span> 
+                <div class="enterparams">
+                    <div class="title">
+                        Параметры ввода <span class="question question_enterparams"><div class="answer answer_enterparams">Введите логин, введите пароль из 8 символов и повторите его</div></span> 
+                    </div>
+                    <div class="input_block"><span class="symbol_input symbol_input__login"></span><my-input placeholder="Логин" class="input-registr" v-model="login" :class="{input_registr_error: spaceCheck(login)}"></my-input></div>
+                    <div class="input_block"><span class="symbol_input symbol_input__password"></span> <my-input placeholder="Придумайте пароль" class="input-registr" type="password" v-model="password" :class="{input_registr_error: spaceCheck(password)}"></my-input></div>
+                    <div class="input_block"><span class="symbol_input symbol_input__password"></span><my-input placeholder="Повторите пароль" class="input-registr" type="password" v-model="password_repeat" :class="{input_registr_error: spaceCheck(password_repeat)}"></my-input></div> 
                 </div>
-                <img ref="captcha__img"/>
-                <div class="input_block"><span class="symbol_input symbol_input__captcha"></span><my-input placeholder="Текст на картинке" class="input-registr" v-model="captcha" :class="{input_registr_error: spaceCheck(captcha)}"></my-input></div>
-            </div>
-            <div class="agree">
-                <div>
-                    Я ознакомился(-лась) с <router-link>политикой конфеденциальности, </router-link><br>
-                    также согласен(-на) с <router-link>правилами поведения на платформе</router-link>
+                <div class="optional">
+                    <div class="title">
+                        Связь со мной (не обязательно) <span class="question question_optional"><div class="answer answer_optional">Введите действительную почту и номер телефона (не обязательно)</div></span>
+                    </div>
+                    <div class="input_block"><span class="symbol_input symbol_input__mail"></span><my-input placeholder="Почта" class="input-registr" v-model="email" :class="{input_registr_error: spaceCheck(email)}"></my-input></div>
+                    <div class="input_block"><span class="symbol_input symbol_input__phone"></span><my-input placeholder="Номер телефона" class="input-registr" v-model="phone" :class="{input_registr_error: spaceCheck(phone)}"></my-input></div>
                 </div>
-                <my-checkbox class="registr_checkbox" @click="checkbox = !checkbox" :checkbox="checkbox"></my-checkbox>
-            </div>
-            <div class="buttonsenter">
-                <my-button class="button_regist" @click = 'registration'>Создать аккаунт</my-button>
-                <router-link to="/main/authorization">У меня уже есть аккаунт</router-link>
             </div>
         </div>
+        <div class="agree">
+            <div>
+                Я ознакомился(-лась) с <router-link>политикой конфеденциальности, </router-link><br>
+                также согласен(-на) с <router-link>правилами поведения на платформе</router-link>
+            </div>
+            <my-checkbox class="registr_checkbox" @click="checkbox = !checkbox" :checkbox="checkbox"></my-checkbox>
+        </div>
+        <div class="buttonsenter">
+            <my-button class="button_regist" @click = 'registration'>Создать аккаунт</my-button>
+            <router-link to="/auth">У меня уже есть аккаунт</router-link>
+        </div>
     </div>
+    <Error :status="status_error" :title="title_error" v-model="isError" v-if="isError">
+    </Error>
+    <Footer></Footer>
 </template>
 
 <script>
 
+import Error from '../Error/Error.vue'
 import Header from '../Parts/Header.vue'
+import Footer from '../Parts/Footer.vue'
+import { Vue3Lottie } from 'vue3-lottie'
+import animProfilePhoto from '@/assets/regist_auth/profile_anim.json'
 
 export default {
     name: 'reg-block',
     components: {
-        Header
+        Header,
+        Vue3Lottie,
+        Error,
+        Footer
     }, 
     data()
     {
@@ -73,75 +97,114 @@ export default {
             phone: '',
             captcha: '',
             captcha_token: '',
-            notSpace: false
+            notSpace: false,
+            animProfilePhoto,
+            isPictureOnload: false,
+            isError: false,
+            status_error: "",
+            title_error: ''
         }
     },
     methods:
     {
-        getCaptcha()
+        async getCaptcha()
         {
-            const response = fetch("http://127.0.0.1:5000/api/captcha")
-            const data = response.json()
-            console.log(data)
+            const response = await fetch("http://127.0.0.1:5000/api/captcha")
+            const data = await response.json()
             this.$refs.captcha__img.src = "data:image/png;base64," + data.captcha_image
             this.captcha_token = data.captcha_token
+        },
+
+        loadPicture(event)
+        {   
+            let file = event.target.files[0];
+            let pictureProfile = this.$refs.pictureProfile;
+            if(file)
+            {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    pictureProfile.src = e.target.result
+                };
+                reader.readAsDataURL(file);
+                this.isPictureOnload = true
+            }
         },
 
         async registration()
         {
             if(this.first_name == '' && this.sur_name == '' && this.middle_name == '' && this.login == '' && this.password == '' && this.password_repeat == '' && this.captcha == '')
             {
-                alert('Введены не все данные')
+                this.status_error = "Front"
+                this.title_error = "Введены не все данные"
+                this.isError = true
                 return
             }
             if(document.getElementsByClassName('input_registr_error').length != 0)
             {
-                alert('Введены некорректные данные')
+                this.status_error = "Front"
+                this.title_error = "Введены некорректные данные"
+                this.isError = true
                 return
             }
-            if(this.password.length <= 8)
+            if(this.password.length < 8)
             {
-                alert('Слишком короткий пароль')
+                this.status_error = "Front"
+                this.title_error = "Слишком короткий пароль"
+                this.isError = true
                 return
             }
             if(this.password != this.password_repeat)
             {
-                alert('Пароли не совпадают')
+                this.status_error = "Front"
+                this.title_error = "Пароли не совпадают"
+                this.isError = true
                 return
             }
             if(!this.checkbox)
             {
-                alert('Не согласен(-на) с правилами поведения на платформе')
+                this.status_error = "Front"
+                this.title_error = "Не согласен(-на) с правилами поведения на платформе"
+                this.isError = true
                 return
             }
-            const data = 
-            {
-                first_name: this.first_name,
-                sur_name: this.sur_name,
-                middle_name: this.middle_name,
-                login: this.login,
-                password: this.password,
-                email: this.email,
-                phone: this.phone,
-                captcha_token: this.captcha_token,
-                input_captcha: this.captcha
-            }
-            const response = await fetch("http://127.0.0.1:5000/api/auth", {
+            const response = await fetch("http://127.0.0.1:5000/api/auth/", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Target-Action': 'REGISTER'
                 },
-                body: JSON.stringify({data})
+                body: JSON.stringify({
+                first_name: this.first_name,
+                sur_name: this.sur_name,
+                middle_name: this.middle_name || null,
+                login: this.login,
+                password: this.password,
+                email: this.email || null,
+                phone_number: this.phone || null,
+                captcha_token: this.captcha_token,
+                input_captcha: this.captcha
+                })
             })
-            const resData = response.json()
+            const resData = await response.json()
             console.log(resData)
             if(!response)
             {
-                alert("huia")
+                this.status_error = "Front"
+                this.title_error = "Запрос не прошел"
+                this.isError = true
                 return
             }
-            this.$router.push("/main")
+            if(/2../.test(String(resData.status)))
+            {
+                document.cookie = `session_token=Bearer ${resData.session_token}; path=/; expires=${new Date(Date.now() + 1000 * 60 * 60 * 2).toUTCString()}`
+                this.$router.push('/home')
+            }
+            else
+            {
+                this.status_error = String(resData.status)
+                this.title_error = resData.message
+                this.isError = true
+            }
         },
 
         spaceCheck(elem)
@@ -163,7 +226,7 @@ export default {
 
     mounted()
     {
-        // this.getCaptcha()
+        this.getCaptcha()
     }
 }
 </script>
@@ -171,10 +234,10 @@ export default {
 <style scoped>
     .register
     {
-        width: 53%;
-        height: 186vh;
+        width: 70%;
+        height: 159vh;
         position: relative;
-        left: 23.5%;
+        left: 15%;
         margin-top: 50px;
         background-color: white;
         border-radius: 50px;
@@ -194,38 +257,18 @@ export default {
         font-family: "Montserrat", sans-serif;
     }
 
-    .params
+    .container_params
     {
-        width: 100%;
-        height: 85%;
+        width: 80%;
+        height: 55%;
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        justify-content: center;
         padding-top: 4%;
         border-top: 1px solid #E7E7E7;
     }
-
-    .aboutme, .enterparams, .optional, .captcha
-    {
-        width: 48%;
-        height: 17%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        margin-top: 5%;
-    }
-
-    .optional
-    {
-        height: 12%;
-    }
-
-    .captcha
-    {
-        height: 24%;
-    }
-    
-    .aboutme > .title, .enterparams > .title, .optional > .title, .captcha > .title
+        
+    .container_params .title
     {
         color: #515151;
         font-size: 1.5em;
@@ -233,6 +276,142 @@ export default {
         display: flex;
         position: relative;
         align-items: center;
+    }
+
+    .photoAndCaptcha
+    {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .photo
+    {
+        width: 100%;
+        height: 52%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .enterpicture
+    {
+        width: 100%;
+        height: 21%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 6%;
+    }
+
+    .input-registr-picture-container
+    {
+        width: 80%;
+        height: 83%;
+        border-radius: 15px;
+        border: 3px #E0E0E0 dashed;
+        position: relative;
+        margin-top: 5.7%;
+    }
+
+    .input-registr-picture-container > img
+    {
+        position: absolute;
+        width: 90%;
+        height: 90%;
+        top: 5%;
+        left: 5%;
+        z-index: 1;
+    }
+
+    .input-registr-picture-container::after
+    {
+        content: "Выберите или перетащите";
+        position: absolute;
+        top: 100%;
+        font-size: 1.4em;
+        left: 0;
+        color: #E0E0E0;
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .input-registr-picture
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        z-index: 2;
+    }
+
+    .captcha
+    {
+        width: 80%;
+        height: 41%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .captcha > .input_block
+    {
+        height: 17.3%;
+    }
+
+    .captcha > img
+    {
+        width: 100%;
+        height: 61%;
+        border-radius: 30px;
+    }
+
+    .params
+    {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .aboutme, .enterparams, .optional
+    {
+        width: 100%;
+        height: 36%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 5%;
+    }
+
+    .aboutme
+    {
+        margin-top: 0;
+    }
+
+    .optional
+    {
+        height: 28%;
+    }
+
+    .input_block
+    {
+        width: 100%;
+        height: 21%;
+        display: flex;
+        align-items: center;
+        background-color: #F3F3F3;
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+    }
+
+    .optional > .input_block
+    {
+        height: 27%;
     }
 
     .question
@@ -261,40 +440,12 @@ export default {
         display: none;
         border: 1px solid #AC2DFE;
         transition-duration: 0.5s;
+        z-index: 2;
     }
 
     .question_aboutme:hover > .answer_aboutme, .question_enterparams:hover > .answer_enterparams, .question_optional:hover > .answer_optional, .question_captcha:hover > .answer_captcha
     {
         display: inline-block;
-    }
-
-    .input_block
-    {
-        width: 100%;
-        height: 21%;
-        display: flex;
-        align-items: center;
-        background-color: #F3F3F3;
-        border-radius: 30px;
-        display: flex;
-        align-items: center;
-    }
-
-    .captcha > .input_block
-    {
-        height: 15%;
-    }
-
-    .optional > .input_block
-    {
-        height: 30%;
-    }
-
-    .captcha > img
-    {
-        width: 100%;
-        height: 61%;
-        border-radius: 30px;
     }
 
     .symbol_input
@@ -362,8 +513,8 @@ export default {
 
     .buttonsenter
     {
-        width: 100%;
-        height: 10%;
+        width: 80%;
+        height: 9%;
         display: flex;
         flex-direction: column;
         align-items: center;

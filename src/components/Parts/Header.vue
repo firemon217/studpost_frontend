@@ -4,17 +4,17 @@
             <div class="profile__icon" v-if="isProfile">
                 <img src="@/assets/header/usericon.svg"/>
             </div>
-            <div class="profile__link" v-if="isProfile"><router-link to="/main/authorization">войти</router-link><router-link to="/main/registration">регистрация</router-link></div>
+            <div class="profile__link" v-if="isProfile"><router-link to="/auth">войти</router-link><router-link to="/regist">регистрация</router-link></div>
         </div>
         <div class="logo">
             <img class="logo__ncfu" src="@/assets/header/ncfu.svg"/><img class="logo__studposts" src="@/assets/header/studposts.svg"/>
         </div>
         <nav>
-            <router-link to="/main" class="nav__link" :class="{nav__link_active: isPost}">
+            <router-link to="/home" class="nav__link" :class="{nav__link_active: isPost}">
                 Главная
                 <div></div>
             </router-link>
-            <router-link to="/main/aboutus" class="nav__link">
+            <router-link to="/home/aboutus" class="nav__link">
                 О проекте
                 <div></div>
             </router-link>

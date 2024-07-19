@@ -34,5 +34,28 @@ export default {
         padding: 1em;
     } 
 
+    .textarea-createpost::placeholder
+    {
+        color: #CECECE
+    }
+
+    .textarea-editpost
+    {       
+        width: 100%;
+        min-width: 100%;
+        height: 100%;
+        min-height: 100%;
+        max-height: 100%;
+        background-color: rgba(0,0,0,0);
+        border: none;
+        font-size: 1.6em;
+        padding: 1em;
+    } 
+
+    .textarea-editpost::placeholder
+    {
+        color: #CECECE
+    }
+
 </style>
     

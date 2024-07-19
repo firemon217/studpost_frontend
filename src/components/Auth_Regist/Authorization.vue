@@ -9,33 +9,100 @@
                 <div class="title">
                     Параметры ввода <span class="question question_enterparams"><div class="answer answer_enterparams">Введите логин, введите пароль из 8 символов и повторите его</div></span> 
                 </div>
-                <div class="input_block"><span class="symbol_input symbol_input__login"></span><my-input placeholder="Логин"  class="input-auth"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__password"></span> <my-input placeholder="Придумайте пароль" class="input-auth" type="password"></my-input></div>
+                <div class="input_block"><span class="symbol_input symbol_input__login"></span><my-input placeholder="Логин" v-model="login" class="input-auth"></my-input></div>
+                <div class="input_block"><span class="symbol_input symbol_input__password"></span> <my-input placeholder="Придумайте пароль" v-model="password" class="input-auth" type="password"></my-input></div>
             </div>
             <div class="captcha">
                 <div class="title">
                     Решите задачу <span class="question question_captcha"><div class="answer answer_captcha">Введите символы, которые видете на изображении</div></span> 
                 </div>
-                <img />
-                <div class="input_block"><span class="symbol_input symbol_input__captcha"></span><my-input placeholder="Текст на картинке"  class="input-auth"></my-input></div>
+                <img ref="captcha__img"/>
+                <div class="input_block"><span class="symbol_input symbol_input__captcha"></span><my-input placeholder="Текст на картинке"  class="input-auth" v-model="captcha"></my-input></div>
             </div>
             <div class="buttonsenter">
-                <my-button class="button_regist">Зайти в аккаунт</my-button>
-                <router-link to="/main/registration">Создать новый</router-link>
+                <my-button class="button_regist" @click="authorization">Зайти в аккаунт</my-button>
+                <router-link to="/regist">Создать новый</router-link>
             </div>
         </div>
     </div>
+    <Footer></Footer>
 </template>
 
 <script>
 
 import Header from '../Parts/Header.vue'
+import Footer from '../Parts/Footer.vue'
 
 export default {
     name: 'reg-block',
     components: {
-        Header
+        Header,
+        Footer
     },  
+
+    data()
+    {
+        return {
+            login: '',
+            password: '',
+            captcha: '',
+            captcha_token: '',
+        }
+    },
+
+    methods:
+    {
+        async getCaptcha()
+        {
+            const response = await fetch("http://127.0.0.1:5000/api/captcha")
+            const data = await response.json()
+            this.$refs.captcha__img.src = "data:image/png;base64," + data.captcha_image
+            this.captcha_token = data.captcha_token
+        },
+
+        async authorization()
+        {
+            if(this.first_name == '' && this.password == '')
+            {
+                alert('Введены не все данные')
+                return
+            }
+            const response = await fetch("http://127.0.0.1:5000/api/auth/", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Target-Action': 'LOGIN'
+                },
+                body: JSON.stringify({
+                login: this.login,
+                password: this.password,
+                captcha_token: this.captcha_token,
+                input_captcha: this.captcha
+                })
+            })
+            const resData = await response.json()
+            console.log(resData)
+            if(!response)
+            {
+                alert("huia")
+                return
+            }
+            if(/2../.test(String(resData.status)))
+            {
+                document.cookie = `session_token=Bearer ${resData.session_token}; path=/; expires=${new Date(Date.now() + 1000 * 60 * 60 * 2).toUTCString()}`
+                this.$router.push('/home')
+            }
+            else
+            {
+                alert(resData.message)
+            }
+        },
+    },
+
+    mounted()
+    {
+        this.getCaptcha()
+    }
 }
 
 </script>

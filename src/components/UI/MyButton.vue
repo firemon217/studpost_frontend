@@ -133,7 +133,7 @@ export default {
     .button_create
     {
         width: 48%;
-        height: 6%;
+        height: 4%;
         background-color: #AC2DFE;
         color: white;
         border: none;
@@ -157,6 +157,58 @@ export default {
         transition-duration: 0.1s;
         background-color: #65169b;
         color: rgb(167, 167, 167);
+    }
+
+    .button_edit
+    {
+        width: 48%;
+        height: 4%;
+        background-color: #AC2DFE;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        font-size: 1.7em;
+        transition-duration: 0.2s;
+        position: relative;
+        left: 26.5%;
+        margin-top: 10%;
+    }
+
+    .button_edit:hover
+    {
+        background-color: #9323dd;
+        color: rgb(212, 212, 212);
+    }
+
+    
+    .button_edit:active
+    {
+        transition-duration: 0.1s;
+        background-color: #65169b;
+        color: rgb(167, 167, 167);
+    }
+
+    .closeError
+    {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 7.5%;
+        height: 15%;
+        transform: rotate(45deg);
+        background-color: #65169b;
+        clip-path: polygon(45% 0,
+                            55% 0,
+                            55% 45%,
+                            100% 45%,
+                            100% 55%,
+                            55% 55%,
+                            55% 100%,
+                            45% 100%,
+                            45% 55%,
+                            0 55%,
+                            0 45%,
+                            45% 45%);
     }
 
 </style>

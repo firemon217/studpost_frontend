@@ -1,6 +1,6 @@
 <template>
     <Header :isProfile="true"></Header>
-    <div class="createpost">
+    <div class="editpost">
         <h1>
             Публикация
         </h1>
@@ -9,32 +9,31 @@
                 <div class="title">
                     Придумайте название публикации <span class="question question_enterparams"><div class="answer answer_enterparams">Введите логин, введите пароль из 8 символов и повторите его</div></span> 
                 </div>
-                <div class="input_block"><my-input placeholder="Какие места стоит посетить на отпуске ?" class="input-createpost" v-model="title"></my-input></div>
+                <div class="input_block"><my-input placeholder="Какие места стоит посетить на отпуске ?" class="input-editpost" v-model="title"></my-input></div>
             </div>
             <div class="entercontent">
                 <div class="title">
                     Добавьте содержание для публикации <span class="question question_captcha"><div class="answer answer_captcha">Введите символы, которые видете на изображении</div></span> 
                 </div>
-                <img />
-                <div class="input_block"><my-textarea placeholder="Отпуск это прежде всего ответственная задача..." class="textarea-createpost" v-model="content"></my-textarea></div>
+                <div class="input_block"><my-textarea placeholder="Отпуск это прежде всего ответственная задача..." class="textarea-editpost" v-model="content"></my-textarea></div>
             </div>
             <div class="entertags">
                 <div class="title">
                     Укажите категории для поста<span class="question question_enterparams"><div class="answer answer_enterparams">Введите логин, введите пароль из 8 символов и повторите его</div></span> 
                 </div>
-                <div class="input_block"><my-input placeholder="отдых отпуск планирование..." class="input-createpost"  v-model="tags"></my-input></div>
+                <div class="input_block"><my-input placeholder="отдых отпуск планирование..." class="input-editpost"  v-model="tags"></my-input></div>
             </div>
             <div class="enterpicture">
                 <div class="title">
                     Добавьте картинку для поста <span class="question question_enterparams"><div class="answer answer_enterparams" >Введите логин, введите пароль из 8 символов и повторите его</div></span> 
                 </div>
-                <div :class="{ 'input-createpost-picture-container-ready': isPictureOnload, 'input-createpost-picture-container': !isPictureOnload }">
-                    <input class="input-createpost-picture" type="file" @change="loadPicture($event)" v-if="!isPictureOnload"/>
-                    <img src="@/assets/createpost/inputpicture.svg" v-if="!isPictureOnload"/>
+                <div :class="{ 'input-editpost-picture-container-ready': isPictureOnload, 'input-editpost-picture-container': !isPictureOnload }">
+                    <input class="input-editpost-picture" type="file" @change="loadPicture($event)" v-if="!isPictureOnload"/>
+                    <img src="@/assets/editpost/inputpicture.svg" v-if="!isPictureOnload"/>
                     <img ref="loadPictureContainer" v-show="isPictureOnload"/>
                 </div>
             </div>
-            <my-button class="button_create" @click="createPost">Добавить публикацию</my-button>
+            <my-button class="button_edit" @click="editpost">Добавить публикацию</my-button>
         </div>
     </div>
     <Footer></Footer>
@@ -79,7 +78,7 @@ export default {
             }
         },
 
-        async createPost()
+        async editpost()
         {
             if(this.title == '' || this.content == '' || this.tags == '')
             {
@@ -121,7 +120,7 @@ export default {
 
 <style scoped>
 
-    .createpost
+    .editpost
     {
         width: 53%;
         height: 215vh;
@@ -169,7 +168,7 @@ export default {
     .input_block
     {
         width: 100%;
-        height: 25%;
+        height: 18%;
         display: flex;
         align-items: center;
         background-color: #F3F3F3;
@@ -217,18 +216,18 @@ export default {
         margin-top: 6%;
     }
 
-    .input-createpost-picture-container
+    .input-editpost-picture-container
     {
         width: 45%;
         height: 50%;
         border-radius: 15px;
         border: 3px #E0E0E0 dashed;
         position: relative;
-        top: 25%;
         left: 27.5%;
+        top: 25%;
     }
 
-    .input-createpost-picture-container-ready
+    .input-editpost-picture-container-ready
     {
         width: 100%;
         height: 98%;
@@ -238,7 +237,7 @@ export default {
         align-items: center
     }
 
-    .input-createpost-picture-container > img
+    .input-editpost-picture-container > img
     {
         position: absolute;
         width: 90%;
@@ -248,7 +247,7 @@ export default {
         z-index: 1;
     }
 
-    .input-createpost-picture-container-ready > img
+    .input-editpost-picture-container-ready > img
     {
         position: absolute;
         max-width: 100%;
@@ -256,7 +255,7 @@ export default {
         z-index: 1;
     }
 
-    .input-createpost-picture-container::after
+    .input-editpost-picture-container::after
     {
         content: "Выберите или перетащите";
         position: absolute;
@@ -269,7 +268,7 @@ export default {
         margin-top: 10px;
     }
 
-    .input-createpost-picture
+    .input-editpost-picture
     {
         position: absolute;
         width: 100%;

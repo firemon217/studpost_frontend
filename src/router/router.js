@@ -4,29 +4,35 @@ import Posts from '@/components/Posts/Posts.vue'
 import Registration from '@/components/Auth_Regist/Registration.vue'
 import Authorization from '@/components/Auth_Regist/Authorization.vue'
 import CreatePosts from '@/components/Posts/CreatePost.vue'
+import EditPost from '@/components/Posts/EditPost.vue'
 
 const routes = [
     {
-        path: '/main',
-        component: Main,
-        children: [
-            {
-              path: '/main',
-              component: Posts
-            },
-            {
-              path: '/main/createpost',
-              component: CreatePosts
-            },
-            {
-              path: '/main/registration',
-              component: Registration
-            },
-            {
-              path: '/main/authorization',
-              component: Authorization
-            }
-          ]
+      path: '/home',
+      component: Main,
+      children: [
+          {
+            path: '/home',
+            component: Posts
+          },
+          {
+            path: '/home/createpost',
+            component: CreatePosts
+          },
+          {
+            path: '/home/editpost',
+            component: EditPost
+          },
+        ]
+    },
+    
+    {
+      path: '/auth',
+      component: Authorization,
+    },
+    {
+      path: '/regist',
+      component: Registration
     }
 ]
 

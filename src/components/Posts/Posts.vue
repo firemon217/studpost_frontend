@@ -3,9 +3,9 @@
     <div class="posts">
         <div class="addPost">
             <h1>
-                Делитесь своими деями, мыслями и историями, о чем вы сейчас думаете ?
+                Делитесь своими iдеями, мыслями и историями, о чем вы сейчас думаете ?
             </h1>
-            <my-button class="addButton" @click="$router.push('/main/createpost')"><Vue3Lottie :animationData="animButton"/></my-button>
+            <my-button class="addButton" @click="$router.push('/home/createpost')"><Vue3Lottie :animationData="animButton"/></my-button>
             <h2>
                 Добавить публикацию
             </h2>
@@ -67,11 +67,13 @@
             Еще посты
         </my-button>
     </div>
+    <Footer></Footer>
 </template>
 
 <script>
 
 import Header from '../Parts/Header.vue';
+import Footer from '../Parts/Footer.vue';
 import { Vue3Lottie } from 'vue3-lottie'
 import animButton from '@/assets/main/data.json'
 
@@ -79,7 +81,8 @@ export default {
     name: 'posts-block',
     components: {
         Header,
-        Vue3Lottie
+        Vue3Lottie,
+        Footer
     },  
     data()
     {
