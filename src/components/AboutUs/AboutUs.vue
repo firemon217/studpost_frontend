@@ -92,7 +92,7 @@
                             </div>
                             <ul class="participant-role">
                                 Роли в разработке:
-                                <li>Backend разработка <span>•</span> Python</li>
+                                <li>Руководитель Backend разработки <span>•</span> Python</li>
                                 <li>Архитектура приложения <span>•</span> Защита данных</li>
                                 <li>Архитектура базы данных <span>•</span> Тестирование и отладка</li>
                             </ul>

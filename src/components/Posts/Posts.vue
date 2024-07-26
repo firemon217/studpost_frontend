@@ -59,8 +59,12 @@ export default {
     methods: {
         async startPosts()
         {
+            if(!sessionStorage.getItem('filter'))
+            {
+                sessionStorage.setItem('filter', this.filter)
+            }   
             this.loadMore = true
-            const response = await fetch(`http://127.0.0.1:5000/api/home?limit=2&page=${this.page}&search=${this.search}&orderByDate=${this.filter}`, {
+            const response = await fetch(`http://127.0.0.1:5000/api/home?limit=2&page=${this.page}&search=${this.search}&orderByDate=${sessionStorage.getItem('filter')}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -84,10 +88,14 @@ export default {
 
         async getNewPost()
         {
+            if(!sessionStorage.getItem('filter'))
+            {
+                sessionStorage.setItem('filter', this.filter)
+            }  
             this.loadMore = true
             if(Math.ceil(this.totalPosts / 2) >= this.page)
             {
-                const response = await fetch(`http://127.0.0.1:5000/api/home?limit=2&page=${this.page}&search=${this.search}&orderByDate=${this.filter}`, {
+                const response = await fetch(`http://127.0.0.1:5000/api/home?limit=2&page=${this.page}&search=${this.search}&orderByDate=${sessionStorage.getItem('filter')}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -135,6 +143,7 @@ export default {
         {
             this.posts = []
             this.filter = select
+            sessionStorage.setItem('filter', select)
             this.page = 1
             this.startPosts()
         },

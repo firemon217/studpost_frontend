@@ -73,27 +73,27 @@ export default {
 
 <style scoped>
      .post
-   {
-        width: 1000px;
-        background-color: white;
-        margin-top: 60px;
-        border-radius: 50px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.2);
-   }
+     {
+          width: 1000px;
+          background-color: white;
+          margin-top: 60px;
+          border-radius: 50px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.2);
+     }
 
    .post> .info
-   {
-        width: 90%;
-        height: 71px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 1.2em;
-        margin-top: 40px;
-   }
+     {
+          width: 90%;
+          height: 71px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 1.2em;
+          margin-top: 40px;
+     }
 
    .post> .info> div:nth-child(1)
    {

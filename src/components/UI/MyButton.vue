@@ -268,6 +268,7 @@ export default {
         color: #7C7C7C;
         border: none;
         background-color: rgba(0, 0, 0, 0);
+        margin-right: 20px;
     }
 
     .more-comments

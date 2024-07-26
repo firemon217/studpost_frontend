@@ -7,7 +7,7 @@
             <div class="operations_block" @click="deletePost" v-if="isPost && operation.delete">
                 <img src="@/assets/operations/delete.svg"/> Удалить
             </div>
-            <div class="operations_block" v-if="isComment && operation.update">
+            <div class="operations_block" @click="$emit('redact')" v-if="isComment && operation.update">
                 <img src="@/assets/operations/edit.svg"/> Изменить
             </div>
             <div class="operations_block" @click="deleteComment" v-if="isComment && operation.delete">

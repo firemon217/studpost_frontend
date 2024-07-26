@@ -5,13 +5,13 @@
                 <img :src="{userIcon: userIcon}"/> {{comment.user_data.surName}} {{comment.user_data.firstName}} {{comment.user_data.middleName}}
             </div>
             <div class="operation">
-                <Date :pdate="this.comment.createdAt"></Date><my-operation :isComment="true" :id="this.comment.unique_id" @remove="$emit('remove', comment)" :operation="this.comment.operations" v-if="this.comment.operations"></my-operation>
+                <Date :pdate="this.comment.createdAt"></Date><my-operation @redact="this.update = true" :isComment="true" :id="this.comment.unique_id" @remove="$emit('remove', comment)" :operation="this.comment.operations" v-if="this.comment.operations"></my-operation>
             </div>
         </div>
         <div class="content" v-if="!update">
             {{content}}
         </div>
-        <my-textarea v-model="this.content" v-if="update" class="comment_redact"><div>{{content}}</div></my-textarea>
+        <my-textarea v-model="this.content_change" v-if="update" class="comment_redact"><div>{{content}}</div></my-textarea>
         <div class="button-container">
             <my-button class="comment-reply" v-if="!this.comment.operations" @click="$emit('reply', comment.user_data.firstName)">
                 Ответить
@@ -21,6 +21,9 @@
             </my-button>
             <my-button class="comment-reply" v-if="update" @click="redactComment">
                 Отправить изменения
+            </my-button>
+            <my-button class="comment-reply" v-if="update" @click="this.update = false; this.content_change = this.comment.content">
+                Отменить
             </my-button>
         </div>
     </div>
@@ -45,7 +48,8 @@ export default {
         return {
             content: this.comment.content,
             update: false,
-            userIcon: this.comment.user_data.persPhotoData
+            userIcon: this.comment.user_data.persPhotoData,
+            content_change: this.comment.content
         }   
     },
     methods:

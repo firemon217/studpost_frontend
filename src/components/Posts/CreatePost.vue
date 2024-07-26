@@ -9,20 +9,20 @@
                 <div class="title">
                     Придумайте название публикации <my-question>Введите название своей интереснейшей публикации</my-question>
                 </div>
-                <div class="input_block"><my-input placeholder="Какие места стоит посетить на отпуске ?" class="input-post" v-model="title" :limit="200"></my-input></div>
+                <div class="input_block"><my-input placeholder="Какие места стоит посетить на отпуске ?" class="input-post" v-model="title" :limit="200" @input="saveStorage"></my-input></div>
             </div>
             <div class="entercontent">
                 <div class="title">
                     Добавьте содержание для публикации <my-question>Поделитесь с людьми своими мыслями в поле содержания</my-question>
                 </div>
                 <img />
-                <div class="input_block"><my-textarea placeholder="Отпуск это прежде всего ответственная задача..." class="textarea-createpost" v-model="content"></my-textarea></div>
+                <div class="input_block"><my-textarea placeholder="Отпуск это прежде всего ответственная задача..." class="textarea-createpost" v-model="content" @input="saveStorage"></my-textarea></div>
             </div>
             <div class="entertags">
                 <div class="title">
                     Укажите категории для поста <my-question>Помогите читателям найти вашу публикацию по тегам</my-question>
                 </div>
-                <div class="input_block"><my-input placeholder="отдых отпуск планирование..." class="input-post"  v-model="tags" :limit="100"></my-input></div>
+                <div class="input_block"><my-input placeholder="отдых отпуск планирование..." class="input-post"  v-model="tags" :limit="100" @input="saveStorage"></my-input></div>
             </div>
             <div class="enterpicture">
                 <div class="title">
@@ -107,6 +107,7 @@ export default {
             const data = await response.json()
             if(/2../.test(String(data.status)))
             {
+                localStorage.removeItem('post_info')
                 this.$router.push('/home')
             }
             else
@@ -116,7 +117,28 @@ export default {
                 this.isInfo = true
                 this.isError = true
             }
+        },
+
+        saveStorage()
+        {
+            localStorage.setItem('post_info', JSON.stringify({title: this.title, content: this.content, tags: this.tags}))
+            console.log(JSON.parse(localStorage.getItem('post_info')))
+        },
+
+        getElemStorage()
+        {
+            if(localStorage.getItem('post_info'))
+            {
+                this.title = JSON.parse(localStorage.getItem('post_info')).title
+                this.content = JSON.parse(localStorage.getItem('post_info')).content
+                this.tags = JSON.parse(localStorage.getItem('post_info')).tags
+            }
         }
+    },
+
+    mounted()
+    {
+        this.getElemStorage()
     }
 }
 
