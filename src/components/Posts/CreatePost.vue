@@ -122,7 +122,6 @@ export default {
         saveStorage()
         {
             localStorage.setItem('post_info', JSON.stringify({title: this.title, content: this.content, tags: this.tags}))
-            console.log(JSON.parse(localStorage.getItem('post_info')))
         },
 
         getElemStorage()
