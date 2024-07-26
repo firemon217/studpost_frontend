@@ -116,10 +116,7 @@ export default {
                 if(/2../.test(String(data.status)))
                 {
                     this.user = data.user_data
-                    // if(data.user_data.persPhotodata)
-                    // {
-                    //     this.userPhoto = data.user_data.persPhotodata
-                    // }
+                    this.userPhoto = data.user_data.persPhotodata
                     this.first_name = this.user.firstName || ""
                     this.sur_name = this.user.surName || ""
                     this.middle_name = this.user.middleName || ""
@@ -220,7 +217,7 @@ export default {
             }
             else
             {
-                this.title_error = response.message
+                this.title_error = "Введены некорректные данные"
                 this.status_error = "Ошибка"
                 this.isInfo = true
                 this.isError = true

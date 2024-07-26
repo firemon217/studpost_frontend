@@ -160,7 +160,6 @@ export default {
    .posts
    {
         width: 100%;
-        min-height: 118vh;
         display: flex;
         flex-direction: column;
         align-items: center;

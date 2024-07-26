@@ -8,7 +8,7 @@ import EditPost from '@/components/Posts/EditPost.vue'
 import Profile from '@/components/Profile/Profile.vue'
 import Post from '@/components/Posts/Post.vue'
 import AboutUs from '@/components/AboutUs/AboutUs.vue'
-import Error from '@/components/Info/Error.vue'
+// import Error from '@/components/Info/Error.vue'
 import Load from '@/components/Info/Load.vue'
 
 const routes = [
@@ -54,14 +54,14 @@ const routes = [
       path: '/load',
       component: Load
     },
-    {
-      path: '/404',
-      component: Error
-    },
-    {
-      path: '/:catchAll(.*)',
-      redirect: '/404'
-    },
+    // {
+    //   path: '/error',
+    //   component: Error
+    // },
+    // {
+    //   path: '/:catchAll(.*)',
+    //   redirect: '/error'
+    // },
 
 ]
 

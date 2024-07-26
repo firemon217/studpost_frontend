@@ -105,7 +105,6 @@ export default {
                 this.isError = true
             }
             const data = await response.json()
-            console.log(data)
             if(/2../.test(String(data.status)))
             {
                 this.$router.push('/home')

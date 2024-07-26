@@ -2,7 +2,7 @@
     <div class="post">
         <div class="info">
             <div>
-                <img src="@/assets/main/userposts.svg" /> {{this.post.user_data.surName}} {{this.post.user_data.firstName}} {{this.post.user_data.middleName}}
+                <img :src="userIcon" /> {{this.post.user_data.surName}} {{this.post.user_data.firstName}} {{this.post.user_data.middleName}}
             </div> 
             <div>
                <Date :pdate="this.date"></Date><my-operation :id="this.post.unique_id" :isPost="true" @remove="$emit('remove', post)" :operation="this.post.operations" v-if="this.post.operations"></my-operation>
@@ -15,7 +15,7 @@
             {{this.content}}
         </div>
         <my-button class="content__image" @click="$router.push(`/home/post/${this.post.unique_id}`)">
-            <img src="@/assets/main/backgroundpost.jpg"/>
+            <img :src="postIcon"/>
             <div></div>
             <div class="button-post">Читать</div>
         </my-button>
@@ -47,7 +47,9 @@ export default {
     {
           return {
                date: this.post.createdAt,
-               content: ""
+               content: "",
+               userIcon: this.post.user_data.persPhotoData,
+               postIcon: this.post.imageData
           }
     },
 
@@ -59,7 +61,6 @@ export default {
                this.content = this.post.content.substr(0, 100) + "...";
                else
                this.content = this.post.content
-               console.log(this.post)
           }    
     },
 

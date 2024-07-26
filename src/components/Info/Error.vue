@@ -9,7 +9,7 @@
                 <div class="info">
                     Не удалось загрузить запрашиваемый ресурс. Детали:
                 </div>
-                <div class="content" v-if="this.$route.path == '/404'">
+                <div class="content" v-if="this.$route.path == '/error'">
                     Сервер вернул статус 404, сообщение: Not founded
                 </div>
                 <div class="content" v-else>

@@ -2,7 +2,7 @@
     <div class="comment">
         <div class="info">
             <div class="profile">
-                <img src="@/assets/post/userposts.svg"/> {{comment.user_data.surName}} {{comment.user_data.firstName}} {{comment.user_data.middleName}}
+                <img :src="{userIcon: userIcon}"/> {{comment.user_data.surName}} {{comment.user_data.firstName}} {{comment.user_data.middleName}}
             </div>
             <div class="operation">
                 <Date :pdate="this.comment.createdAt"></Date><my-operation :isComment="true" :id="this.comment.unique_id" @remove="$emit('remove', comment)" :operation="this.comment.operations" v-if="this.comment.operations"></my-operation>
@@ -13,7 +13,7 @@
         </div>
         <my-textarea v-model="this.content" v-if="update" class="comment_redact"><div>{{content}}</div></my-textarea>
         <div class="button-container">
-            <my-button class="comment-reply" v-if="!this.comment.operations" @click="$emit('reply', comment.unique_id)">
+            <my-button class="comment-reply" v-if="!this.comment.operations" @click="$emit('reply', comment.user_data.firstName)">
                 Ответить
             </my-button>
             <my-button class="comment-reply" v-if="this.comment.operations && !update" @click="this.update = true">
@@ -44,7 +44,8 @@ export default {
     {
         return {
             content: this.comment.content,
-            update: false
+            update: false,
+            userIcon: this.comment.user_data.persPhotoData
         }   
     },
     methods:
@@ -115,6 +116,7 @@ export default {
 
     .info > .profile > img
     {
+        height: 100%;
         margin-right: 40px;
     }
 

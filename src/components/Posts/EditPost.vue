@@ -124,7 +124,7 @@ export default {
             this.title = this.post.title
             this.content = this.post.content
             this.tags = this.post.tags
-            this.userPhoto = this.post.image_data
+            this.userPhoto = this.post.imageData
         }
     },
 

@@ -1,8 +1,8 @@
 <template>
     <header :class="{shadow: !isSearchSort}">
         <div class="profile">
-            <div class="profile__icon" v-if="isProfile && isLoad" ref="profileIcons">
-                <img src="@/assets/header/usericon.svg"/>
+            <div class="profile__icon" v-if="isProfile && isLoad">
+                <img :src="userIcon"/>
             </div>
             <div class="profile__link" v-if="isProfile && !isAuthoized && isLoad"><router-link to="/auth">войти</router-link><router-link to="/regist">регистрация</router-link></div>
             <div class="profile__link" v-if="isProfile && isAuthoized  && isLoad"><span @click="exitProfile">выйти</span><router-link to="/home/profile">профиль</router-link></div>
@@ -45,6 +45,7 @@ export default {
             isSearchHide: false,
             isAuthoized: false,
             isLoad: false,
+            userIcon: ""
         }
     },
     methods:
@@ -67,15 +68,14 @@ export default {
                 })
                 if(!response)
                 {
-                    alert('Error')
+                    return
                 }
                 const data = await response.json()
                 if(/2../.test(String(data.status)))
                 {
                     this.isLoad = true
                     this.isAuthoized = true
-                    // if(data.user_data.persPhotodata)
-                    //     this.$refs.profileIcons.src = data.user_data.persPhotodata
+                    this.userIcon = data.user_data.persPhotodata
                 }
             }
             else
@@ -129,17 +129,14 @@ export default {
         height: 70px;
         width: 70px;
         border-radius: 50%;
-        background-color: #AD6BE2;
         overflow: hidden;
     }
 
     .profile__icon > img
     {
-        width: 60px;
-        height: 60px;
+        width: 70px;
+        height: 70px;
         position: relative;
-        left: 5px;
-        top: 10px;
     }
 
     .profile__link

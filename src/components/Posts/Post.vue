@@ -11,9 +11,9 @@
             {{this.post.tags}}
         </div>
         <div class="profile">
-            <img src="@/assets/post/userposts.svg"/>
+            <img :src="userIcon"/>
             <div class="profile-name">
-                Андрю Линкольн Николаевич
+                {{this.user_data.surName}} {{this.user_data.firstName}} {{this.user_data.middleName}}
             </div>
         </div>
         <div class="pictures" v-if="this.post.imageData">
@@ -84,7 +84,9 @@ export default {
             status_error: '',
             title_error: '',
             isError: false,
-            isInfo: false
+            isInfo: false,
+            userIcon: '',
+            user_data: {},
         }
     },
 
@@ -111,8 +113,10 @@ export default {
             }
             const data = await response.json()
             this.post = data.post
-            console.log(this.post)
             this.date = this.post.createdAt
+            console.log(this.post)
+            this.user_data = this.post.user_data
+            this.userIcon = this.post.user_data.persPhotoData
         },
 
         async getStartComments()
@@ -242,6 +246,7 @@ export default {
         replyComment(comment)
         {
             this.commentContent = `@${comment}, `
+            document.getElementsByClassName("input-createcomment")[0].focus()
         },
 
         filterBy(select)

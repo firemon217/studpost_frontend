@@ -10,7 +10,6 @@ export default {
 </script>
 
 <style scoped>
-
     button
     {
         cursor: pointer;
