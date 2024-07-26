@@ -7,36 +7,36 @@
         <div class="params">
             <div class="entertitle">
                 <div class="title">
-                    Придумайте название публикации <span class="question question_enterparams"><div class="answer answer_enterparams">Введите логин, введите пароль из 8 символов и повторите его</div></span> 
+                    Придумайте название публикации <my-question>Введите название своей интереснейшей публикации</my-question>
                 </div>
-                <div class="input_block"><my-input placeholder="Какие места стоит посетить на отпуске ?" class="input-createpost" v-model="title"></my-input></div>
+                <div class="input_block"><my-input placeholder="Какие места стоит посетить на отпуске ?" class="input-post" v-model="title" :limit="200"></my-input></div>
             </div>
             <div class="entercontent">
                 <div class="title">
-                    Добавьте содержание для публикации <span class="question question_captcha"><div class="answer answer_captcha">Введите символы, которые видете на изображении</div></span> 
+                    Добавьте содержание для публикации <my-question>Поделитесь с людьми своими мыслями в поле содержания</my-question>
                 </div>
                 <img />
                 <div class="input_block"><my-textarea placeholder="Отпуск это прежде всего ответственная задача..." class="textarea-createpost" v-model="content"></my-textarea></div>
             </div>
             <div class="entertags">
                 <div class="title">
-                    Укажите категории для поста<span class="question question_enterparams"><div class="answer answer_enterparams">Введите логин, введите пароль из 8 символов и повторите его</div></span> 
+                    Укажите категории для поста <my-question>Помогите читателям найти вашу публикацию по тегам</my-question>
                 </div>
-                <div class="input_block"><my-input placeholder="отдых отпуск планирование..." class="input-createpost"  v-model="tags"></my-input></div>
+                <div class="input_block"><my-input placeholder="отдых отпуск планирование..." class="input-post"  v-model="tags" :limit="100"></my-input></div>
             </div>
             <div class="enterpicture">
                 <div class="title">
-                    Добавьте картинку для поста <span class="question question_enterparams"><div class="answer answer_enterparams" >Введите логин, введите пароль из 8 символов и повторите его</div></span> 
+                    Добавьте картинку для поста <my-question>Все любят красочные картинки. Добавьте одну, чтобы больше заинтересовать читателя</my-question>
                 </div>
-                <div :class="{ 'input-createpost-picture-container-ready': isPictureOnload, 'input-createpost-picture-container': !isPictureOnload }">
-                    <input class="input-createpost-picture" type="file" @change="loadPicture($event)" v-if="!isPictureOnload"/>
-                    <img src="@/assets/createpost/inputpicture.svg" v-if="!isPictureOnload"/>
-                    <img ref="loadPictureContainer" v-show="isPictureOnload"/>
+                <div :class="{'input-createpost-picture-container' : !userPhoto, 'input-createpost-picture-container-ready' : userPhoto}">
+                    <AddPhoto v-model="userPhoto" :isPost="true" v-show="!userPhoto"></AddPhoto>
+                    <Photo v-show="userPhoto" :picture="userPhoto" @deletePhoto="userPhoto = $event" @changePhoto="userPhoto = $event"></Photo>
                 </div>
             </div>
             <my-button class="button_create" @click="createPost">Добавить публикацию</my-button>
         </div>
     </div>
+    <Info :status="status_error" :title="title_error" v-model="isInfo" v-if="isInfo" :class="{Error: isError}"></Info>
     <Footer></Footer>
 </template>
 
@@ -44,12 +44,18 @@
 
 import Header from '../Parts/Header.vue'
 import Footer from '../Parts/Footer.vue'
+import AddPhoto from '../Parts/AddPhoto.vue'
+import Photo from '../Parts/Photo.vue'
+import Info from '../Info/Info.vue'
 
 export default {
     name: 'create-post',
     components: {
         Header,
-        Footer
+        Footer,
+        AddPhoto,
+        Photo,
+        Info
     },  
     data()
     {
@@ -58,36 +64,27 @@ export default {
             content: '',
             tags: '',
             picture: '',
-            isPictureOnload: false
+            userPhoto: "",
+            isError: false,
+            isInfo: false,
+            status_error: "",
+            title_error: ""
         }
     },
 
     methods:
     {
-        loadPicture(event)
-        {   
-            let file = event.target.files[0];
-            let loadPictureContainer = this.$refs.loadPictureContainer;
-            if(file)
-            {
-                let reader = new FileReader();
-                reader.onload = function(e) {
-                    loadPictureContainer.src = e.target.result
-                };
-                reader.readAsDataURL(file);
-                this.isPictureOnload = true
-            }
-        },
-
         async createPost()
         {
             if(this.title == '' || this.content == '' || this.tags == '')
             {
-                alert('Введены не все данные')
+                this.status_error = "Ошибка"
+                this.title_error = "Введены не все данные"
+                this.isInfo = true
+                this.isError = true
                 return
             }
-            let loadPictureContainer = this.$refs.loadPictureContainer;
-            const response = await fetch("http://127.0.0.1:5000/api/create_post/", {
+            const response = await fetch("http://127.0.0.1:5000/api/home/create_post", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -97,21 +94,28 @@ export default {
                     title: this.title,
                     content: this.content,
                     tags: this.tags,
-                    imagedata: loadPictureContainer.src
+                    image_data: this.userPhoto || null
                 })
             })
             if(!response)
             {
-                alert('Error')
+                this.status_error = "Ошибка"
+                this.title_error = "Запрос не прошел"
+                this.isInfo = true
+                this.isError = true
             }
             const data = await response.json()
+            console.log(data)
             if(/2../.test(String(data.status)))
             {
                 this.$router.push('/home')
             }
             else
             {
-                alert(data.message)
+                this.status_error = "Ошибка"
+                this.title_error = data.message
+                this.isInfo = true
+                this.isError = true
             }
         }
     }
@@ -130,7 +134,7 @@ export default {
         margin-top: 50px;
         background-color: white;
         border-radius: 50px;
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.2);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -222,7 +226,6 @@ export default {
         width: 45%;
         height: 50%;
         border-radius: 15px;
-        border: 3px #E0E0E0 dashed;
         position: relative;
         top: 25%;
         left: 27.5%;
@@ -231,85 +234,9 @@ export default {
     .input-createpost-picture-container-ready
     {
         width: 100%;
-        height: 98%;
+        height: 93%;
+        top: 1%;
         position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center
-    }
-
-    .input-createpost-picture-container > img
-    {
-        position: absolute;
-        width: 90%;
-        height: 90%;
-        top: 5%;
-        left: 5%;
-        z-index: 1;
-    }
-
-    .input-createpost-picture-container-ready > img
-    {
-        position: absolute;
-        max-width: 100%;
-        max-height: 100%;
-        z-index: 1;
-    }
-
-    .input-createpost-picture-container::after
-    {
-        content: "Выберите или перетащите";
-        position: absolute;
-        top: 100%;
-        font-size: 1.4em;
-        left: 0;
-        color: #E0E0E0;
-        width: 100%;
-        text-align: center;
-        margin-top: 10px;
-    }
-
-    .input-createpost-picture
-    {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        z-index: 2;
-    }
-
-    .question
-    {
-        display: inline-block;
-        height: 20px;
-        width: 20px;
-        margin-left: 15px;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        vertical-align: middle;
-        position: relative;
-        background-image: url('@/assets/regist_auth/info.svg');
-        font-size: 0.8em;
-    }
-
-    .answer
-    {
-        width: 200px;
-        padding: 10px;
-        position: absolute;
-        background-color: white;
-        border-radius: 25px;
-        left: 20px;
-        display: none;
-        border: 1px solid #AC2DFE;
-        transition-duration: 0.5s;
-        z-index: 2;
-    }
-
-    .question_enterparams:hover > .answer_enterparams, .question_captcha:hover > .answer_captcha
-    {
-        display: inline-block;
     }
 
 </style>

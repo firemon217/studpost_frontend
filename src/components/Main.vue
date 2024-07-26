@@ -13,14 +13,6 @@ export default {
             
         }
     },
-
-    methods:
-    {
-    },
-    mounted()
-    {
-       
-    },
 }
 
 </script>
@@ -30,7 +22,6 @@ export default {
     main
     {
         width: 100%;
-        min-height: 118vh;
         position: relative;
     }
 

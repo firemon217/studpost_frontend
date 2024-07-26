@@ -11,6 +11,11 @@ export default {
 
 <style scoped>
 
+    button
+    {
+        cursor: pointer;
+    }
+
     .addButton
    {
         width: 150px;
@@ -65,6 +70,7 @@ export default {
         margin-top: 60px;
         transition-duration: 0.2s;
         cursor: pointer;
+        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
     }
 
     .morePost:hover
@@ -188,27 +194,112 @@ export default {
         color: rgb(167, 167, 167);
     }
 
-    .closeError
+    .button_profile
+    {
+        width: 43%;
+        height: 7%;
+        background-color: #AC2DFE;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        font-size: 1.7em;
+        transition-duration: 0.2s;
+        position: relative;
+        margin-top: 7%;
+    }
+
+    .button_profile:hover
+    {
+        background-color: #9323dd;
+        color: rgb(212, 212, 212);
+    }
+
+    
+    .button_profile:active
+    {
+        transition-duration: 0.1s;
+        background-color: #65169b;
+        color: rgb(167, 167, 167);
+    }
+
+    .closeinfo
     {
         position: absolute;
         top: 10px;
         right: 10px;
         width: 7.5%;
         height: 15%;
-        transform: rotate(45deg);
+        border: none;
+        background-color: rgba(0, 0, 0, 0);
+        background-image: url('@/assets/info/xsymbol.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .button-createcomment
+    {
+        width: 33%;
+        height: 100%;
+        background-color: #BE30FF;
+        color: white;
+        border: none;
+        border-radius: 50vh;
+        font-size: 1.7em;
+        transition-duration: 0.2s;
+    }
+
+    .button-createcomment:hover
+    {
+        background-color: #9323dd;
+        color: rgb(212, 212, 212);
+    }
+
+    
+    .button-createcomment:active
+    {
+        transition-duration: 0.1s;
         background-color: #65169b;
-        clip-path: polygon(45% 0,
-                            55% 0,
-                            55% 45%,
-                            100% 45%,
-                            100% 55%,
-                            55% 55%,
-                            55% 100%,
-                            45% 100%,
-                            45% 55%,
-                            0 55%,
-                            0 45%,
-                            45% 45%);
+        color: rgb(167, 167, 167);
+    }
+
+    .comment-reply
+    {
+        font-size: 1.5em;
+        color: #7C7C7C;
+        border: none;
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    .more-comments
+    {
+        width: 20%;
+        height: 5.5vh;
+        color: #8C3CFF;
+        background-color: white;
+        border-radius: 2.25vh;
+        font-size: 1.5em;
+        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
+        border: none;
+        margin-top: 100px;
+        position: relative;
+        left: 40%;
+        transition-duration: 0.2s;
+    }
+
+    .more-comments:hover
+    {
+        color: #9323dd;
+        background-color: rgb(236, 236, 236);
+        box-shadow: 0px 7px 15px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    .more-comments:active
+    {
+        transition-duration: 0.1s;
+        color: #65169b;
+        background-color: rgb(211, 211, 211);
+        box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.2);
     }
 
 </style>

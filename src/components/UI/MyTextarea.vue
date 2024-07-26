@@ -57,5 +57,14 @@ export default {
         color: #CECECE
     }
 
+    .comment_redact
+    {
+        width: 90%;
+        min-height: 15vh;
+        background-color: rgba(0,0,0,0);
+        border: none;
+        font-size: 1.6em;
+    }
+
 </style>
     

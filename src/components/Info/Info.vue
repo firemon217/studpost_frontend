@@ -1,14 +1,16 @@
 <template>
-    <div class="error">
-        <div class="errorBlock">
+    <div class="info" @click.self="close">
+        <div class="infoBlock">
             <div class="status">
                 {{ this.status }}
             </div>
             <div class="title">
                 {{ this.title }}
             </div>
-            <my-button class="closeError" @click="close"> 
+            <div class="image">
 
+            </div>
+            <my-button class="closeinfo" @click="close"> 
             </my-button>
         </div>
     </div>
@@ -17,12 +19,12 @@
 <script>
 
 export default {
-    name: 'my-error',
+    name: 'my-info',
     props:
     {
         status: String,
         title: String,
-        modelValue: Boolean
+        modelValue: Boolean,
     },
     methods:
     {
@@ -36,29 +38,31 @@ export default {
 </script>
 
 <style scoped>
-    .error
+    .info
     {
         width: 100%;
         height: 100vh;
         background-color: rgba(0, 0, 0, 0.3);
         position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         top: 0;
         z-index: 2;
     }
 
-    .errorBlock
+    .infoBlock
     {
-        width: 20%;
-        height: 20%;
+        width: 25%;
+        min-height: 20%;
+        max-height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: space-around;
         border-radius: 20px;
-        border: 2px dotted rgb(117, 28, 105);
         background-color: white;
         position: fixed;
-        top: 40%;
-        left: 40%;
     }
 
     .status
@@ -69,18 +73,43 @@ export default {
         align-items: center;
         font-size: 2em;
         color: rgb(117, 28, 105);
-        margin-top: 20px;
+    }
+
+    .Error .status
+    {
+        color: #FF5C76;
+    }
+
+    .Atent .status
+    {
+        color: #AF5CFF;
+    }
+
+    .image
+    {
+        width: 50px;
+        height: 50px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .Error .image
+    {
+        background-image: url('@/assets/info/error.svg');
+    }
+
+    .Atent .image
+    {
+        background-image: url('@/assets/info/info-icon.svg');
     }
 
     .title
     {
-        width: 100%;
+        width: 90%;
         display: flex;
-        justify-content: center;
-        align-items: center;
         font-size: 1.5em;
-        color: rgb(117, 28, 105);
-        margin-top: 20px;
+        color: #303030;
     }
 
 </style>

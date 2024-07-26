@@ -7,17 +7,17 @@
         <div class="params">
             <div class="enterparams">
                 <div class="title">
-                    Параметры ввода <span class="question question_enterparams"><div class="answer answer_enterparams">Введите логин, введите пароль из 8 символов и повторите его</div></span> 
+                    Параметры ввода <my-question>Введите свой логин и пароль</my-question>
                 </div>
-                <div class="input_block"><span class="symbol_input symbol_input__login"></span><my-input placeholder="Логин" v-model="login" class="input-auth"></my-input></div>
-                <div class="input_block"><span class="symbol_input symbol_input__password"></span> <my-input placeholder="Придумайте пароль" v-model="password" class="input-auth" type="password"></my-input></div>
+                <div class="input_block"><span class="symbol_input symbol_input__login"></span><my-input limit="50" placeholder="Логин" v-model="login" class="input-profile"></my-input></div>
+                <div class="input_block"><span class="symbol_input symbol_input__password"></span> <my-input limit="50" placeholder="Придумайте пароль" v-model="password" class="input-profile" type="password"></my-input></div>
             </div>
             <div class="captcha">
                 <div class="title">
-                    Решите задачу <span class="question question_captcha"><div class="answer answer_captcha">Введите символы, которые видете на изображении</div></span> 
+                    Решите задачу <my-question>Введите символы, которые видите на картинке</my-question> 
                 </div>
                 <img ref="captcha__img"/>
-                <div class="input_block"><span class="symbol_input symbol_input__captcha"></span><my-input placeholder="Текст на картинке"  class="input-auth" v-model="captcha"></my-input></div>
+                <div class="input_block"> <span class="symbol_input symbol_input__captcha"></span><my-input limit="6" placeholder="Текст на картинке"  class="input-profile" v-model="captcha"></my-input></div>
             </div>
             <div class="buttonsenter">
                 <my-button class="button_regist" @click="authorization">Зайти в аккаунт</my-button>
@@ -25,11 +25,13 @@
             </div>
         </div>
     </div>
+    <Info :status="status_error" :title="title_error" v-model="isInfo" v-if="isInfo" :class="{Error: isError}"></Info>
     <Footer></Footer>
 </template>
 
 <script>
 
+import Info from '../Info/Info.vue'
 import Header from '../Parts/Header.vue'
 import Footer from '../Parts/Footer.vue'
 
@@ -37,7 +39,8 @@ export default {
     name: 'reg-block',
     components: {
         Header,
-        Footer
+        Footer,
+        Info
     },  
 
     data()
@@ -47,6 +50,10 @@ export default {
             password: '',
             captcha: '',
             captcha_token: '',
+            status_error: '',
+            title_error: '',
+            isInfo: false,
+            isError: false
         }
     },
 
@@ -64,10 +71,13 @@ export default {
         {
             if(this.first_name == '' && this.password == '')
             {
-                alert('Введены не все данные')
+                this.status_error = "Ошибка"
+                this.title_error = "Введены не все данные"
+                this.isInfo = true
+                this.isError = true
                 return
             }
-            const response = await fetch("http://127.0.0.1:5000/api/auth/", {
+            const response = await fetch("http://127.0.0.1:5000/api/auth", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -84,7 +94,10 @@ export default {
             console.log(resData)
             if(!response)
             {
-                alert("huia")
+                this.status_error = "Ошибка"
+                this.title_error = "Сервер недоступен"
+                this.isInfo = true
+                this.isError = true
                 return
             }
             if(/2../.test(String(resData.status)))
@@ -94,7 +107,10 @@ export default {
             }
             else
             {
-                alert(resData.message)
+                this.status_error = "Ошибка"
+                this.title_error = resData.message
+                this.isInfo = true
+                this.isError = true
             }
         },
     },
@@ -118,7 +134,7 @@ export default {
         margin-top: 50px;
         background-color: white;
         border-radius: 50px;
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.2);
         display: flex;
         flex-direction: column;
         align-items: center;

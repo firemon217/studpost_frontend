@@ -4,11 +4,8 @@
             <img src="@/assets/header/dropout.svg"/><div ref="select">Сначало свежие</div>
         </div>
         <div class="select-list">
-            <div class="select-elem" @click="select">Сначала свежие</div>
-            <div class="select-elem" @click="select">Сначала старые</div>
-            <div class="select-elem" @click="select">По алфавиту вверх</div>
-            <div class="select-elem" @click="select">По алфавиту вниз</div>
-            <div class="select-elem" @click="select">По имени вверх</div>
+            <div class="select-elem" @click="select($event, 'disc')">Сначала свежие</div>
+            <div class="select-elem" @click="select($event, 'asc')">Сначала старые</div>
         </div>
     </div>
 </template>
@@ -19,9 +16,10 @@ export default {
     name: 'my-select',
     methods:
     {
-        select(elem)
+        select(elem, select)
         {
             this.$refs.select.innerText = elem.target.innerText
+            this.$emit('select', select)
         }
     }
 }
@@ -75,12 +73,13 @@ export default {
         transition-duration: 0.3s;
         background-color: #F3F3F3;
         border-radius: 0px 0px 15px 15px;
+        z-index: 2;
     }
 
     .select-main> .select-list> .select-elem
     {
         width: 100%;
-        height: 50px;
+        height: 4.6vh;
         display: flex;
         align-items: center;
         padding-left: 15px;
@@ -95,7 +94,7 @@ export default {
     .select-main:hover > .select-list
     {
         width: 100%;
-        height: 250px;
+        height: 9.2vh;
     }
 
     .select-main:hover > .select > img

@@ -1,11 +1,32 @@
 <template>
   <router-view></router-view>
+  <Load class="wait"></Load>
 </template>
 
 <script>
 
+import Load from '@/components/Info/Load.vue'
+
 export default {
   name: 'App',
+  components:
+  {
+    Load
+  },
+  methods:
+  {
+      closeWait()
+      {
+        window.onload = () =>
+        {
+          document.getElementsByClassName('wait')[0].style = "display: none;"
+        }
+      }
+  },
+  mounted()
+  {
+      this.closeWait()
+  },
 }
 </script>
 
@@ -23,12 +44,29 @@ export default {
 
   #app {
     width: 100%;
-    min-height: 200vh;
     background-image: url("@/assets/main/background.svg");
-    background-size: 100%;
-    background-repeat: repeat-y;
+    background-size: 50%;
+    background-repeat: repeat;
     position: relative;
   }
+
+  
+  .wait
+    {
+        width: 20%;
+        height: 20%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        background-color: white;
+        position: fixed;
+        top: 40%;
+        left: 40%;
+        z-index: 3;
+        font-size: 2em;
+    }
 
   @media (max-width: 1745px)
   {

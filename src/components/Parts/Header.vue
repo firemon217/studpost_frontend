@@ -1,20 +1,21 @@
 <template>
     <header :class="{shadow: !isSearchSort}">
         <div class="profile">
-            <div class="profile__icon" v-if="isProfile">
+            <div class="profile__icon" v-if="isProfile && isLoad" ref="profileIcons">
                 <img src="@/assets/header/usericon.svg"/>
             </div>
-            <div class="profile__link" v-if="isProfile"><router-link to="/auth">войти</router-link><router-link to="/regist">регистрация</router-link></div>
+            <div class="profile__link" v-if="isProfile && !isAuthoized && isLoad"><router-link to="/auth">войти</router-link><router-link to="/regist">регистрация</router-link></div>
+            <div class="profile__link" v-if="isProfile && isAuthoized  && isLoad"><span @click="exitProfile">выйти</span><router-link to="/home/profile">профиль</router-link></div>
         </div>
         <div class="logo">
             <img class="logo__ncfu" src="@/assets/header/ncfu.svg"/><img class="logo__studposts" src="@/assets/header/studposts.svg"/>
         </div>
         <nav>
-            <router-link to="/home" class="nav__link" :class="{nav__link_active: isPost}">
+            <router-link to="/home" class="nav__link" exact-active-class="nav__link_active">
                 Главная
                 <div></div>
             </router-link>
-            <router-link to="/home/aboutus" class="nav__link">
+            <router-link to="/aboutus" class="nav__link" exact-active-class="nav__link_active">
                 О проекте
                 <div></div>
             </router-link>
@@ -22,9 +23,9 @@
     </header>
     <div class="sortAndSearch" :class="{sortAndSearchHide: isSearchHide}" v-if="isSearchSort">
         <div class="search__input">
-            <span class="symbol_input"></span> <my-input placeholder="Искать по названию" class="input-main"></my-input>
+            <span class="symbol_input"></span> <my-input placeholder="Искать по названию" class="input-main" @input="$emit('input', $event.target.value)"></my-input>
         </div>
-        Сортировать по: <my-select class="select-main"></my-select>
+        Сортировать по: <my-select class="select-main" @select="$emit('select', $event)"></my-select>
     </div>
     <my-button class="hideSearch" :class="{hideSearchHidden: isSearchHide}" @click="hideSearch" v-if="isSearchSort" :hideSearch="isSearchHide"></my-button>
 </template>
@@ -37,12 +38,13 @@ export default {
     {
         isProfile: Boolean,
         isSearchSort: Boolean,
-        isPost: Boolean
     },
     data()
     {
         return {
-            isSearchHide: false
+            isSearchHide: false,
+            isAuthoized: false,
+            isLoad: false,
         }
     },
     methods:
@@ -50,7 +52,48 @@ export default {
         hideSearch()
         {
             this.isSearchHide = !this.isSearchHide
+        },
+
+        async isAuthor()
+        {
+            if(document.cookie.split('session_token=')[1])
+            {
+                const response = await fetch('http://127.0.0.1:5000/api/get_user', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": document.cookie.split('session_token=')[1]	
+                }
+                })
+                if(!response)
+                {
+                    alert('Error')
+                }
+                const data = await response.json()
+                if(/2../.test(String(data.status)))
+                {
+                    this.isLoad = true
+                    this.isAuthoized = true
+                    // if(data.user_data.persPhotodata)
+                    //     this.$refs.profileIcons.src = data.user_data.persPhotodata
+                }
+            }
+            else
+            {
+                this.isLoad = true
+            }
+        },
+
+        exitProfile()
+        {
+            this.isAuthoized = false
+            document.cookie = `session_token=Bearer ${document.cookie.split(/Bearer /)[1]}; path=/; expires=${new Date(Date.now() - 1000).toUTCString()}`
         }
+    },
+
+    mounted()
+    {
+        this.isAuthor()
     }
 }
 
